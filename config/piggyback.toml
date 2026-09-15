@@ -1,0 +1,12 @@
+[general]
+
+# Group: Server side
+"Disable ability to ride" = false
+
+# Group: Client side
+"Translucent rider" = 50			# 0 to disable render player model
+"Translucent carrier" = 100			# 0 to disable render player model
+"Dismount on falling" = false
+"Carrying Causes Hunger" = false
+"Weighted Carrying" = false
+

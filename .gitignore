@@ -1,0 +1,10 @@
+# IDE stuff
+.idea/
+.iml
+
+world/
+world*/
+
+# Modpacks
+.mrpack
+

@@ -1,0 +1,38 @@
+services:
+  cattaga-creative:
+    build:
+      context: .
+      # language=Dockerfile
+      dockerfile_inline: |
+        FROM ubuntu:25.10
+
+        RUN apt-get update && apt-get install -y curl git openjdk-21-jre
+        RUN curl -OL https://github.com/nothub/mrpack-install/releases/download/v0.20.0-beta/mrpack-install_0.20.0-beta_linux_amd64.deb && dpkg -i mrpack-install_0.20.0-beta_linux_amd64.deb && rm mrpack-install_0.20.0-beta_linux_amd64.deb
+        RUN mkdir /mc-server
+        # && cd /mc-server && curl -o server.jar -L https://meta.fabricmc.net/v2/versions/loader/1.20.1/0.18.4/1.1.1/server/jar
+        
+        # COPY Cattaga-1.2.0.mrpack /mc-server
+        COPY Cattaga-2.0.0-server.mrpack /mc-server
+        # COPY Cattaga 1.2.0 simplified2.mrpack /mc-server
+        
+        RUN mrpack-install /mc-server/Cattaga-2.0.0-server.mrpack
+        RUN echo "eula=true" > /mc/eula.txt
+        
+        WORKDIR /mc
+        
+        RUN echo "java -Xms4G -Xmx8G -jar $(ls fabric-server-*.jar)" > run.sh
+        
+        CMD ["bash", "run.sh"]
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    ports:
+      - "25565:25565"
+      - "24454:24454/udp"
+    volumes:
+      - ./world:/mc/world
+      - ./kubejs:/mc/kubejs
+      - ./config:/mc/config
+      - ./server.properties:/mc/server.properties
+      - ./whitelist.json:/mc/whitelist.json
+      - ./ops.json:/mc/ops.json
+      - ./schematics:/mc/config/worldedit/schematics
