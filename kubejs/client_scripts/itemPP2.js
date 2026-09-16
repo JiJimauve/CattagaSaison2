@@ -9,9 +9,36 @@ BlockEvents.placed('refurbished_furniture:oak_storage_jar', event => {
   event.cancel();
 })
 
-/*
-// Check if player has tag "labubu"
-if (player.getTags().contains('labubu')) {
-player.addEffect('minecraft:luck', 1200, 0) // 1200 ticks = 1 minute
+// -------------------------------------------
+// Utility function to check if there is a tag
+function playerHasTag(player, tag) {
+    if (!player) {
+		return false
+	} 
+	
+	return player.getTags().contains(tag)
 }
-*/
+
+// Staff Item
+// Cancel event if player does not have tag "staff" 
+
+BlockEvents.rightClicked('kubejs:staff_button', event => {
+	
+	if (!playerHasTag(event.getEntity(), 'staff') {
+		player.tell("Rien ne se passe")
+		event.cancel();
+	}
+	
+});
+
+// Helper Item
+// Cancel event if player does not have tag "helper" 
+
+BlockEvents.rightClicked('kubejs:helper_button', event => {
+	
+	if (!playerHasTag(event.getEntity(), 'helper') {
+		player.tell("Rien ne se passe")
+		event.cancel();
+	}
+	
+});

@@ -329,8 +329,19 @@ StartupEvents.registry('block', event => {
   .noDrops()
   .noValidSpawns(true)
   ; 
-  
-  
-  
-  
+    
+  // staff Button
+  event.create('staff_button', 'button')
+	  .displayName('Bouton bien étrange')
+	  .unbreakable()
+	  .noDrops()
+	  .textureAll('kubejs:block/staff_texture');
+
+  // helper Button
+  event.create('helper_button', 'button')
+	  .displayName('Bouton bien étrange')
+	  .unbreakable()
+	  .noDrops()
+	  .textureAll('kubejs:block/helper_texture');
+
 })
