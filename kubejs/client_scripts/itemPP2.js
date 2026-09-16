@@ -11,6 +11,7 @@ BlockEvents.placed('refurbished_furniture:oak_storage_jar', event => {
 
 // -------------------------------------------
 // Utility function to check if there is a tag
+// If not tag tell player that it won't work 
 function playerHasTag(player, tag) {
     if (!player) {
 		return false
@@ -19,13 +20,19 @@ function playerHasTag(player, tag) {
 	return player.getTags().contains(tag)
 }
 
+function playerTellMsg(player,msg) {
+	if (player) {
+		player.tell(msg)
+	}
+}
+
 // Staff Item
 // Cancel event if player does not have tag "staff" 
 
 BlockEvents.rightClicked('kubejs:staff_button', event => {
 	
-	if (!playerHasTag(event.getEntity(), 'staff') {
-		player.tell("Rien ne se passe")
+	if (!playerHasTag(event.getEntity(), 'staff')) {
+		playerTellMsg(event.getEntity(), "Rien ne se passe");
 		event.cancel();
 	}
 	
@@ -36,8 +43,8 @@ BlockEvents.rightClicked('kubejs:staff_button', event => {
 
 BlockEvents.rightClicked('kubejs:helper_button', event => {
 	
-	if (!playerHasTag(event.getEntity(), 'helper') {
-		player.tell("Rien ne se passe")
+	if (!playerHasTag(event.getEntity(), 'helper')) { 
+	playerTellMsg(event.getEntity(), "Rien ne se passe");
 		event.cancel();
 	}
 	
