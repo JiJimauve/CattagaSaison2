@@ -6,5 +6,5 @@ world/
 world*/
 
 # Modpacks
-.mrpack
+*.mrpack
 
