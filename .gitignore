@@ -2,8 +2,8 @@
 .idea/
 .iml
 
-world/
-world*/
+server-volume/world/
+server-volume/world*/
 
 # Modpacks
 *.mrpack

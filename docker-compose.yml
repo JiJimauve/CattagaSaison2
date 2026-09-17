@@ -29,10 +29,10 @@ services:
       - "25565:25565"
       - "24454:24454/udp"
     volumes:
-      - ./world:/mc/world
-      - ./kubejs:/mc/kubejs
-      - ./config:/mc/config
-      - ./server.properties:/mc/server.properties
-      - ./whitelist.json:/mc/whitelist.json
-      - ./ops.json:/mc/ops.json
-      - ./schematics:/mc/config/worldedit/schematics
+      - ./server-volume/world:/mc/world
+      - ./server-volume/kubejs:/mc/kubejs
+      - ./server-volume/config:/mc/config
+      - ./server-volume/server.properties:/mc/server.properties
+      - ./server-volume/whitelist.json:/mc/whitelist.json
+      - ./server-volume/ops.json:/mc/ops.json
+      - ./server-volume/schematics:/mc/config/worldedit/schematics
