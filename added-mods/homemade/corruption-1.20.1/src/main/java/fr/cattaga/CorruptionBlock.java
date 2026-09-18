@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.PushReaction;
@@ -28,6 +29,19 @@ public class CorruptionBlock {
     // Propagate Corruption Block
 
     // Moss Carpet
+    public static final Block CORRUPTION_MOSS_BLOCK = register(
+            new CarpetBlock(
+                    BlockBehaviour.Properties.of()
+                            .randomTicks()
+                            .strength(0.1F)
+                            .sound(SoundType.SCULK)
+                            .lightLevel(state -> 11)
+                            .pushReaction(PushReaction.DESTROY)
+
+            ),
+            "corruptionmossblock",
+            true
+    );
 
     // Glow Linchen
 
@@ -38,7 +52,7 @@ public class CorruptionBlock {
 
         // Register Item : Means creating the item that you can hold and pose
         // Sometimes, you may not want to register an item for the block.
-        // Eg: if it's a technical block like `minecraft:air` or `minecraft:end_gateway`
+        // Eg: if it's technical block like `minecraft:air` or `minecraft:end_gateway`
         if (shouldRegisterItem) {
             BlockItem blockItem = new BlockItem(block, new Item.Properties());
             Registry.register(BuiltInRegistries.ITEM, id, blockItem);
