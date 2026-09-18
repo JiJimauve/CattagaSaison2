@@ -29,5 +29,11 @@ Pour IntelliJ :
 ## Quelques tuto 
 
 * [Rajouter un nouveau mob](https://www.youtube.com/watch?v=wgVnkqqBGFs)
+* [Rajouter un block](https://docs.fabricmc.net/1.20.4/develop/blocks/first-block)
+
+
+## Bonnes pratiques
+
+* Créer une constante avec le mod ID ( souvent le nom du mod / nom du mod finissant par mod)
 
 
