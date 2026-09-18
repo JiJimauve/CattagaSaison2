@@ -21,7 +21,11 @@ public class Corruption implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("Hello Fabric world!");
+		LOGGER.info("Cattaga : CORRUPTION IS HERE, maybe life is about helping other escaping their fear and sadness ?");
+
+        CorruptionBlock.initialize(); // Force registering of Block
+
+
 	}
 
 	public static ResourceLocation id(String path) {
