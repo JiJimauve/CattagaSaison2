@@ -17,11 +17,11 @@ public class Corruption implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in corruptionmossblock.json mod-load-ready state.
+		// This code runs as soon as Minecraft is in  mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("Cattaga : CORRUPTION IS HERE, maybe life is about helping other escaping their fear and sadness ?");
+		LOGGER.info("Cattaga : C IS HERE, maybe life is about helping other escaping their fear and sadness ?");
 
         CorruptionBlock.initialize(); // Force registering of Block
 

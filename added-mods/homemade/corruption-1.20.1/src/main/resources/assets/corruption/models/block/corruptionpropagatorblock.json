@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "corruption:block/corruption_bottom",
+    "side": "corruption:block/corruption_side",
+    "top": "corruption:block/corruption_propagator_top"
+  }
+}
