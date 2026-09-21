@@ -1,0 +1,38 @@
+package fr.cattaga.corruption;
+
+import net.fabricmc.api.ModInitializer;
+
+import net.minecraft.resources.ResourceLocation;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class Corruption implements ModInitializer {
+    public static final String MOD_ID = "corruption";
+
+    // This logger is used to write text to the console and the log file.
+    // It is considered best practice to use your mod id as the logger's name.
+    // That way, it's clear which mod wrote info, warnings, and errors.
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+    @Override
+    public void onInitialize() {
+        // This code runs as soon as Minecraft is in  mod-load-ready state.
+        // However, some things (like resources) may still be uninitialized.
+        // Proceed with mild caution.
+
+        LOGGER.info("Cattaga : C IS HERE, maybe life is about helping other escaping their fear and sadness ?");
+        LOGGER.debug("Cattaga : Debugging Introduction Msg");
+        LOGGER.trace("Cattaga : Trace Introduction Msg");
+
+
+        CorruptionBlock.initialize(); // Force registering of Block
+
+
+
+    }
+
+    public static ResourceLocation generateResourceLocation(String path) {
+        return new ResourceLocation(MOD_ID, path);
+    }
+}

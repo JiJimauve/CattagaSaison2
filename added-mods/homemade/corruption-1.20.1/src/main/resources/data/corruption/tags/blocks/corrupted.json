@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "corruption:corruptionblock",
+    "corruption:corruptionlichenblock",
+    "corruption:corruptionpropagatorblock",
+    "corruption:corruptionveinblock"
+  ]
+}
