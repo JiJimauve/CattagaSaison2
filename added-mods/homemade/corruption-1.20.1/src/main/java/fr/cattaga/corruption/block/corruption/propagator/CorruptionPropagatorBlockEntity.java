@@ -29,7 +29,7 @@ import java.util.*;
 public class CorruptionPropagatorBlockEntity extends BlockEntity implements GameEventListener.Holder<CorruptionPropagatorBlockEntity.CorruptionPropagator> {
     private final CorruptionPropagator corruptionPropagator; // This class is defined in this file bellow
 
-    CorruptionVeinBlock corruptionVeinBlock = null;
+    public static final int ENTITY_RANGE = 16; // where event are listen / happening, diameter
     private BlockPos originBlockPos;
 
 
@@ -361,7 +361,7 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
         do {
             tryBlockPos = this.getRandomPosInListeningSphere(l.getRandom());
             if (tryBlockPos == null) {
-                Corruption.LOGGER.info("Could Not Found any Pos to Corrupt");
+                Corruption.LOGGER.debug("Could Not Found any Pos to Corrupt");
                 return null;
             }
 
@@ -369,7 +369,7 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
 
             nbTry++;
             if (nbTry > 16) {
-                Corruption.LOGGER.info("Could Not Found any block to Corrupt");
+                Corruption.LOGGER.debug("Could Not Found any block to Corrupt");
                 return null;
             }
         } while( !this.isBlockValidForCorruption(tryBlockState) );
@@ -384,7 +384,6 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
 
     // ----------------------------------------------------------------------------------------------------------------
     public static class CorruptionPropagator implements GameEventListener {
-        public static final int PULSE_TICKS = 8;
 
         private CorruptionPropagatorBlockEntity origin;
         private final BlockState blockState;
@@ -428,7 +427,7 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
                     Vec3 vec = maybePos.get();
                     int x = (int) vec.x - 1; // X are miss placed ?
                     int y = (int) vec.y - 1; // Y are miss placed ?
-                    int z = (int) vec.z - 1; // Y are miss placed ?
+                    int z = (int) vec.z - 1; // Z are miss placed ?
 
                     BlockPos pos = Utils.firstAirBlock(serverLevel, new BlockPos(x,y,z));
 
@@ -553,20 +552,6 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
             serverLevel.playSound(null, blockPos, SoundEvents.SCULK_CATALYST_BLOOM, SoundSource.BLOCKS, 2.0F, 0.6F + randomSource.nextFloat() * 0.4F);
         }
 
-        private static String diplayBlockInformation(BlockState blockState, BlockPos pos) {
-
-            StringBuilder msg = new StringBuilder();
-
-            msg.append(pos.getX()).append(",").append(pos.getY()).append(",").append(pos.getZ());
-
-            msg.append(" : ").append(blockState.getBlock().getName());
-            msg.append(" Tags > ");
-
-            for (TagKey<Block> tag : blockState.getTags().toList() ) {
-                msg.append(" ").append(tag).append(" ");
-            }
-            return msg.toString();
-        }
 
     }
 }

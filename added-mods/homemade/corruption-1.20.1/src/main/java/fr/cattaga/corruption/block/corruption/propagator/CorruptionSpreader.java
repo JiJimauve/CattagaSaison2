@@ -30,6 +30,9 @@ import java.util.*;
 
 /**
  * Class used to spread Corruption accross the level
+ *
+ * // NOT USED FOR NOW
+ * // MAYBE NEVER USED ?
  */
 public class CorruptionSpreader {
     public static final int MAX_GROWTH_RATE_RADIUS = 24;

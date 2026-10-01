@@ -10,14 +10,12 @@ import net.minecraft.world.phys.Vec3;
 
 public class Utils {
 
-    public static void DisplayBlocStateProperties(BlockState blockState) {
-
-        for (Property p : blockState.getProperties()) {
-            Corruption.LOGGER.info(blockState.getClass().getName() + " :: " + p.getName() + " : " + blockState.getValue(p));
-        }
-
-    }
-
+    /**
+     * Return the first above block of InitialPos that is an Air Block (null if not found)
+     * @param serverLevel To get the Block
+     * @param intialPos The Initial Pos
+     * @return Pos of Air Block // Null if not found
+     */
     public static BlockPos firstAirBlock(ServerLevel serverLevel, Vec3 intialPos) {
         int x = (int) intialPos.x;
         int y = (int) intialPos.y;
@@ -25,9 +23,16 @@ public class Utils {
         return firstAirBlock(serverLevel, new BlockPos(x,y,z));
     }
 
+    /**
+     * Return the first above block of InitialPos that is an Air Block (null if not found)
+     * @param serverLevel To get the Block
+     * @param intialPos The Initial Pos
+     * @return Pos of Air Block // Null if not found
+     */
     public static BlockPos firstAirBlock(ServerLevel serverLevel, Vec3i intialPos) {
         return firstAirBlock(serverLevel, new BlockPos(intialPos.getX(), intialPos.getY(), intialPos.getZ()));
     }
+
     /**
      * Return the first above block of InitialPos that is an Air Block (null if not found)
      * @param serverLevel To get the Block
@@ -48,14 +53,31 @@ public class Utils {
         if (y > 64) {
             return null;
         }
-        Corruption.LOGGER.info("firstAirBlock of " + intialPos + " is " +finalPos );
+        Corruption.LOGGER.debug("firstAirBlock of " + intialPos + " is " +finalPos );
         return finalPos;
 
     }
 
-    public static void DisplayBlocStateProperties(String premsg, BlockState blockState) {
-        Corruption.LOGGER.info(premsg);
+    /**
+     * Display in Logger Corruption Debug properties of an BlockState (  firstMsg will be display on debug at first )
+     * @param firstMsg Msg to display at first
+     * @param blockState Block State where properties will be look into
+     */
+    public static void DisplayBlocStateProperties(String firstMsg, BlockState blockState) {
+        Corruption.LOGGER.debug(firstMsg);
         DisplayBlocStateProperties(blockState);
+    }
+
+    /**
+     * Display in Logger Corruption Debug properties of an BlockState
+     * @param blockState Block State where properties will be look into
+     */
+    public static void DisplayBlocStateProperties(BlockState blockState) {
+
+        for (Property p : blockState.getProperties()) {
+            Corruption.LOGGER.debug(blockState.getClass().getName() + " :: " + p.getName() + " : " + blockState.getValue(p));
+        }
+
     }
 
 }

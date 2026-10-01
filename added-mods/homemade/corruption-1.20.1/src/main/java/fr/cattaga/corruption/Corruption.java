@@ -23,8 +23,8 @@ public class Corruption implements ModInitializer {
         // Proceed with mild caution.
 
         LOGGER.info("Cattaga : C IS HERE, maybe life is about helping other escaping their fear and sadness ?");
-        LOGGER.debug("Cattaga : Debugging Introduction Msg");
-        LOGGER.trace("Cattaga : Trace Introduction Msg");
+        LOGGER.debug("Cattaga : C Debugging Introduction Msg");
+        LOGGER.trace("Cattaga : C Trace Introduction Msg");
 
 
         // Create Blocks

@@ -21,14 +21,19 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.jetbrains.annotations.Nullable;
 
-
+/**
+ * Specific Block used for the Propagator
+ * It has an Entity in it that is used to deal with the ticking and modifying the level
+ * Be carefull though, the data register are stored in the Block not in the Entity
+ * CF CorruptionPropagatorBlockEntity
+ *
+ */
 public class CorruptionPropagatorBlock extends BaseEntityBlock {
 
     public static final int MAX_ENERGY = 128;
     public static final IntegerProperty ENERGY = IntegerProperty.create("energy", 0, MAX_ENERGY);
 
     public static final BooleanProperty PULSE = BlockStateProperties.BLOOM;
-    private final IntProvider xpRange = ConstantInt.of(16);
 
     public CorruptionPropagatorBlock(Properties properties) {
         super(properties);
