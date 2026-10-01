@@ -12,7 +12,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -22,6 +21,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.GameEventListener;
 import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.phys.Vec3;
+import org.spongepowered.asm.mixin.injection.invoke.arg.ArgumentIndexOutOfBoundsException;
 
 import java.security.InvalidParameterException;
 import java.util.*;
@@ -30,17 +30,28 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
     private final CorruptionPropagator corruptionPropagator; // This class is defined in this file bellow
 
     CorruptionVeinBlock corruptionVeinBlock = null;
+    private BlockPos originBlockPos;
 
-    private List<BlockPos> spreadAims = new ArrayList<>();
 
     public CorruptionPropagatorBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(CorruptionBlock.CORRUPTION_PROPAGATOR_BLOCK_ENTITY, blockPos, blockState);
-
-        this.corruptionPropagator = new CorruptionPropagator(blockState, new BlockPositionSource(blockPos), this);
+        this.originBlockPos = blockPos;
+        this.corruptionPropagator = new CorruptionPropagator(blockState, blockPos, this);
     }
 
     // Called Every Tick
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, CorruptionPropagatorBlockEntity corruptionPropagatorBlockEntity) {
+
+        // No Tick Rate = No Tick Acting
+        if (CorruptionPropagatorOptions.PROPAGATOR_TICK_RATE == 0)
+        {
+            return;
+        }
+
+        // If there is a tick rating, tick only at somes tick
+        if (CorruptionPropagatorOptions.PROPAGATOR_TICK_RATE != 1 && level.getGameTime() % CorruptionPropagatorOptions.PROPAGATOR_TICK_RATE != 0) {
+            return;
+        }
 
         if (!blockState.hasProperty(CorruptionPropagatorBlock.ENERGY)) {
             Corruption.LOGGER.error("CorruptionPropagatorBlockEntity received an Blockstate that has no Property "+CorruptionPropagatorBlock.ENERGY+" in it, Cannot PROCESS !");
@@ -51,12 +62,18 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
 
         // Turn AnyBlock in listening area into an Corrupted Block
         if (energy > 100) {
+
+            if (!CorruptionPropagatorOptions.canCorrupt()) {
+                // Did not pass the test
+                return;
+            }
+
             BlockPos posToTurn = corruptionPropagatorBlockEntity.getRandomPosToConvertInListeningArea(level);
 
             if (posToTurn != null) {
                 if ( level.destroyBlock(posToTurn, true)) {
                     if (level.setBlockAndUpdate(posToTurn, CorruptionBlock.CORRUPTION_BLOCK.defaultBlockState())) {
-                        energy -= 75;
+                        energy -= 100;
                         level.playSound(null, posToTurn, SoundEvents.SCULK_BLOCK_SPREAD, SoundSource.BLOCKS, 1.0F, 1.0F);
                     }
                 }
@@ -66,52 +83,78 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
         // Turn Next Corruptible block into Corrupted
         else if (energy > 50) {
 
+            if (!CorruptionPropagatorOptions.canCorrupt()) {
+                // Did not pass the test
+                return;
+            }
+
             // Do an chain where we look random near origin,
             // => If corrupt look next random
             // => If air / BedRock : look next location
             //      => if no location cancel
             // => If Block corruptible => corrupt it
 
-            BlockPos originPos = blockPos;
+            BlockPos originPos = corruptionPropagatorBlockEntity.originBlockPos;
             BlockPos nearPos = null;
             BlockState nearBlock = null;
+            List<BlockPos> alreadyTestedPos = new ArrayList<>();
+            int forbittenDirection = level.random.nextInt(5);
+            Corruption.LOGGER.debug("-------------------- Yummy yummy gonna CORRUPT origin : " + originPos) ;
             do {
 
-                List<Integer> firstDirection = getRandomDirection(); // Give Array [ 1 2 3 4 5 6 ]----> but shuffled
+                List<Integer> randomDirections = getRandomDirectionExcept(forbittenDirection); // Give Array [ 1 2 3 4 5 6 ]----> but shuffled
 
                 // Turn Number ( 1 - 6 ) to Near Pos
-                nearPos = corruptionPropagatorBlockEntity.getRandomNearPos(originPos , firstDirection.remove(0)); // Turn Directionnal Int into a next Pos
+                nearPos = corruptionPropagatorBlockEntity.getRandomNearPos(originPos , randomDirections.remove(0)); // Turn Directionnal Int into a next Pos
 
-                //
+                // Get the block
                 nearBlock = level.getBlockState(nearPos);
 
-                while (!corruptionPropagatorBlockEntity.isBlockValidForCorruption(nearBlock) && nearBlock.is(CorruptionBlock.CORRUPTED)) {
-                    if (firstDirection.isEmpty()) {
+
+                // If block cannot be corrupted => Air / Bedrock
+                while (alreadyTestedPos.contains(nearPos) || (!corruptionPropagatorBlockEntity.isBlockValidForCorruption(nearBlock) && !nearBlock.is(CorruptionBlock.CORRUPTED)) ) { // While we cannot Corrupt Or We didn't found Corrupted one we keep seeking
+
+                    //Corruption.LOGGER.debug("IS NOT GOOD : NEXT DIRECTION ( left " + randomDirections.size() + " ) ") ;
+
+                    if (randomDirections.isEmpty()) {
+                        //Corruption.LOGGER.debug("IS NOT GOOD : END OF DIRECTION ") ;
+
                         nearPos = null;
                         break;
                     }
 
-
-                    nearPos = corruptionPropagatorBlockEntity.getRandomNearPos(blockPos , firstDirection.remove(0));
+                    nearPos = corruptionPropagatorBlockEntity.getRandomNearPos(nearPos , randomDirections.remove(0));
                     nearBlock = level.getBlockState(nearPos);
                 }
 
-                // Found Corrupted, now seak from Corrupted Bloc
+                // Found Corrupted, now seek from Corrupted Bloc
                 if (nearBlock.is(CorruptionBlock.CORRUPTED)) {
+                    //Corruption.LOGGER.debug("IS CORRUPTED => NEW originPos : " + nearPos);
                     originPos = nearPos;
+
+                    alreadyTestedPos.add(nearPos); // Keep in mind where the path we came from
                 }
             } while (nearBlock.is(CorruptionBlock.CORRUPTED));
 
 
-            // Found a block
-            if (level.destroyBlock(nearPos, true)) {
-                if (level.setBlockAndUpdate(nearPos, CorruptionBlock.CORRUPTION_BLOCK.defaultBlockState())) {
-                    energy -= 25;
-                    level.playSound(null, nearPos, SoundEvents.SCULK_BLOCK_SPREAD, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (nearPos != null ) {
+                // Found a block
+                //Corruption.LOGGER.debug("IS NOW CORRUPTED : " + nearPos + "  = LastSpread ") ;
+                if (level.destroyBlock(nearPos, true)) {
+
+                    if (level.setBlockAndUpdate(nearPos, CorruptionBlock.CORRUPTION_BLOCK.defaultBlockState())) {
+                        energy -= 50;
+                        level.playSound(null, nearPos, SoundEvents.SCULK_BLOCK_SPREAD, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+                    }
                 }
+            } else {
+                //Corruption.LOGGER.debug("No corruption found : Back HOME LastSpread = null") ;
             }
 
+
         }
+
 
         if (energy < CorruptionPropagatorBlock.MAX_ENERGY) {
 
@@ -119,6 +162,7 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
             level.setBlock(blockPos, blockState, 3); // Save New Energy Level
 
         }
+
 
         // Begin Work Of Vein
         /*
@@ -189,8 +233,6 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
 
     }
 
-
-
     public boolean isPosInListeningRange(BlockPos pos) {
         boolean inRange = true;
         BlockPos originPos = this.getBlockPos();
@@ -208,33 +250,57 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
 
 
         return inRange;
-
     }
 
     // Utility function for random In Next block
     public static List<Integer> getRandomDirection() {
         ArrayList<Integer> ar = new ArrayList<Integer>(6);
-        ar.addAll(Arrays.asList(1,2,3,4,5,6));
+        ar.addAll(Arrays.asList(0,1,2,3,4,5));
 
         Collections.shuffle(ar);
 
         return ar;
     }
 
+    /**
+     * Give an Direction Array Random except one value
+     * @param exception the value (  0 - 5 )
+     * @return
+     */
+    public static List<Integer> getRandomDirectionExcept(int exception) {
+        if (exception > 5 || exception < 0) {
+            throw new ArgumentIndexOutOfBoundsException(exception);
+        }
+        ArrayList<Integer> ar = new ArrayList<Integer>(5);
 
-        public BlockPos getRandomNearPos(BlockPos bp, int i) {
+        for (int i = 0; i <= 5; i++) {
+            if (i != exception) {
+                ar.add(i);
+            }
+        }
+        Collections.shuffle(ar);
+
+        return ar;
+    }
+
+    public BlockPos getRandomNearPos(BlockPos bp, int i) {
+
+        if (bp == null) {
+            return null;
+        }
+
         switch (i % 6) {
-            case 1 :
+            case 0 :
                 return bp.below();
-            case 2:
+            case 1:
                 return bp.above();
-            case 3 :
+            case 2 :
                 return bp.west();
-            case 4 :
+            case 3 :
                 return bp.east();
-            case 5 :
+            case 4 :
                 return bp.north();
-            case 6 :
+            case 5 :
                 return bp.south();
         }
 
@@ -312,11 +378,6 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
         return tryBlockPos;
     }
 
-    public void addAim(BlockPos blockSpreadTo) {
-        if (!this.spreadAims.contains(blockSpreadTo))
-            this.spreadAims.add(blockSpreadTo);
-    }
-
     public CorruptionPropagator getListener() {
         return this.corruptionPropagator;
     }
@@ -328,12 +389,12 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
         private CorruptionPropagatorBlockEntity origin;
         private final BlockState blockState;
         private final PositionSource positionSource;
+        private final BlockPos blockPos;
 
-        // final SculkSpreader sculkSpreader;// Todo Change it to corruption Spreader
-
-        public CorruptionPropagator(BlockState blockState, PositionSource positionSource, CorruptionPropagatorBlockEntity origin) {
+        public CorruptionPropagator(BlockState blockState, BlockPos blockPos, CorruptionPropagatorBlockEntity origin) {
             this.blockState = blockState;
-            this.positionSource = positionSource;
+            this.blockPos = blockPos;
+            this.positionSource = new BlockPositionSource(blockPos);
             this.origin = origin;
         }
 
@@ -366,23 +427,20 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
 
                     Vec3 vec = maybePos.get();
                     int x = (int) vec.x - 1; // X are miss placed ?
-                    int y = (int) vec.y - 1 ;
+                    int y = (int) vec.y - 1; // Y are miss placed ?
                     int z = (int) vec.z - 1; // Y are miss placed ?
-
 
                     BlockPos pos = Utils.firstAirBlock(serverLevel, new BlockPos(x,y,z));
 
                     if (pos != null) {
                         serverLevel.sendParticles(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5 , 5, 0.2, 0.5, 0.2, 0.01);
-                        Corruption.LOGGER.info("Block " + pos + " ENERGY : " + this.blockState.getValue(CorruptionPropagatorBlock.ENERGY) );
+                        Corruption.LOGGER.debug("Block " + pos + " ENERGY : " + this.blockState.getValue(CorruptionPropagatorBlock.ENERGY) );
                     }
 
                     serverLevel.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, vec3.x, vec3.y+0.5, vec3.z ,3, 0.2, 0.2, 0.2, 0.01);
 
-
-
                 } else {
-                    Corruption.LOGGER.info("Block " + this.positionSource.getPosition(serverLevel)+ " has no ENERGY" + this.positionSource );
+                    Corruption.LOGGER.debug("Block " + this.positionSource.getPosition(serverLevel)+ " has no ENERGY" + this.positionSource );
                 }
 
             }
@@ -390,11 +448,8 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
             // An Entity DIE in the getListenerRadius
             if (gameEvent == GameEvent.ENTITY_DIE && context.sourceEntity() instanceof LivingEntity livingEntity) {
                 if (!livingEntity.wasExperienceConsumed()) {
-                    int i = livingEntity.getExperienceReward();
-                    if (livingEntity.shouldDropExperience() && i > 0) {
-                        //this.sculkSpreader.addCursors(BlockPos.containing(vec3.relative(Direction.UP, 0.5)), i); // Used to store "energy"
-                    }
-
+                    int experienceReceived = livingEntity.getExperienceReward();
+                    // if (livingEntity.shouldDropExperience() && experienceReceived > 0) { }
 
                     livingEntity.skipDropExperience();
                     this.positionSource
@@ -402,15 +457,11 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
                             .ifPresent(vec3x -> this.bloom(serverLevel, BlockPos.containing(vec3x), this.blockState, serverLevel.getRandom()));
 
                     // Try to add new Corruption Vein
-                    //Vec3 deathPosition =
-                   //Vec3i deathPosiotionI = new Vec3i(livingEntity.getBlockX(), livingEntity.getBlockY(), livingEntity.getBlockZ());
-                    Corruption.LOGGER.info("Entity died on : " + livingEntity.getOnPos()  );
 
                     BlockPos blockPosDiedOn = livingEntity.getOnPos();
                     BlockState blockDiedOn = livingEntity.getBlockStateOn();
 
-                    Corruption.LOGGER.info("Entity getBlockStateOn : " + blockDiedOn );
-                    // -------------------- //
+                    // --------------------   //
                     // // Block Selection // //
                     // -------------------- //
                     // If die on bedrock -> Skip
@@ -420,7 +471,7 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
                     BlockState upperBlock = null;
                     // If die in air change floor to corrupted
                     while (blockDiedOn.isAir() || blockDiedOn.is(CorruptionBlock.CORRUPTED)) {
-                        Corruption.LOGGER.info( diplayBlockInformation(blockDiedOn,blockPosDiedOn) + " Is not getting corrupted" );
+                        //Corruption.LOGGER.info( diplayBlockInformation(blockDiedOn,blockPosDiedOn) + " Is not getting corrupted" );
 
                         blockPosDiedOn = blockPosDiedOn.atY( blockPosDiedOn.getY() - 1);
 
@@ -432,15 +483,14 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
                         upperBlock = blockDiedOn;
                         blockDiedOn = serverLevel.getBlockState(blockPosDiedOn);
 
-
                     }
 
-
+                    /*
                     Corruption.LOGGER.info( diplayBlockInformation(blockDiedOn,blockPosDiedOn) + " Is GETTING corrupted" );
 
                     Corruption.LOGGER.info("Entity died Floor : " + blockPosDiedOn );
                     Corruption.LOGGER.info("Entity died Floor : " + blockDiedOn );
-
+                    */
 
                     // ---------------------- //
                     // // Creating Blocks // //
@@ -461,13 +511,9 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
                                 Corruption.LOGGER.warn("Generated a new CORRUPTION_VEIN_BLOCK at " + upperPos + " But didn't get an CorruptionVeinBlock.class");
                             } else {
                                 CorruptionVeinBlock newVeinBlock = (CorruptionVeinBlock) newBlockState.getBlock();
-
-
                             }
 
                         }
-
-
 
                         /*BlockPos originUpBlockPos = BlockPos.containing(vec3.relative(Direction.UP, 1));
                         BlockState originUpBlock = serverLevel.getBlockState(originUpBlockPos);
@@ -481,7 +527,6 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
                                 // multi.getSpreader().spreadAll(blockState3, serverLevel.get, upperPos);
                             }
                         }
-
                          */
                     }
 
@@ -494,7 +539,8 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
 
         }
 
-        /*@VisibleForTesting
+        /*
+        @VisibleForTesting
         public SculkSpreader getSculkSpreader() {
             return null;
         }
@@ -504,7 +550,7 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
             serverLevel.setBlock(blockPos, blockState.setValue(SculkCatalystBlock.PULSE, true), 3);
             serverLevel.scheduleTick(blockPos, blockState.getBlock(), 8);
             serverLevel.sendParticles(ParticleTypes.ASH, blockPos.getX() + 0.5, blockPos.getY() + 6, blockPos.getZ() + 0.5, 25, 0.2, 0.0, 0.2, 0.0);
-            serverLevel.playSound((Player)null, blockPos, SoundEvents.SCULK_CATALYST_BLOOM, SoundSource.BLOCKS, 2.0F, 0.6F + randomSource.nextFloat() * 0.4F);
+            serverLevel.playSound(null, blockPos, SoundEvents.SCULK_CATALYST_BLOOM, SoundSource.BLOCKS, 2.0F, 0.6F + randomSource.nextFloat() * 0.4F);
         }
 
         private static String diplayBlockInformation(BlockState blockState, BlockPos pos) {

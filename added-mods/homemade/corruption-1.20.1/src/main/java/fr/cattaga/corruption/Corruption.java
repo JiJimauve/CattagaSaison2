@@ -1,5 +1,6 @@
 package fr.cattaga.corruption;
 
+import fr.cattaga.corruption.command.CorruptionCommand;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.resources.ResourceLocation;
@@ -26,9 +27,12 @@ public class Corruption implements ModInitializer {
         LOGGER.trace("Cattaga : Trace Introduction Msg");
 
 
+        // Create Blocks
         CorruptionBlock.initialize(); // Force registering of Block
 
 
+        // Create Cmd
+        CorruptionCommand.initialize();
 
     }
 
