@@ -4,6 +4,8 @@
     "corruption:corruptionblock",
     "corruption:corruptionlichenblock",
     "corruption:corruptionpropagatorblock",
-    "corruption:corruptionveinblock"
+    "corruption:corruptionveinblock",
+    "corruption:corruptioneggblock"
+
   ]
 }

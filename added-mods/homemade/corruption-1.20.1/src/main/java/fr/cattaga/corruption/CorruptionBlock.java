@@ -40,6 +40,21 @@ public class CorruptionBlock {
             true
     );
 
+
+    public static final Block CORRUPTION_EGG_BLOCK = registerBlock(
+            new Block(
+                    BlockBehaviour.Properties.of()
+                            .randomTicks()
+                            .strength(-1.0f)
+                            .sound(SoundType.SCULK)
+                            .lightLevel(state -> 11)
+                            .pushReaction(PushReaction.BLOCK)
+
+            ),
+            "corruptioneggblock",
+            true
+    );
+
     // Propagate Corruption Block
     // This block has a custom entity built in it  ( CORRUPTION_PROPAGATOR )
 

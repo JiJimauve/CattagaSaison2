@@ -61,7 +61,10 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
         int energy = blockState.getValue(CorruptionPropagatorBlock.ENERGY);
 
         // Turn AnyBlock in listening area into an Corrupted Block
-        if (energy > 100) {
+        if (energy == CorruptionPropagatorBlock.MAX_ENERGY) {
+
+        }
+        else if (energy > 100) {
 
             if (!CorruptionPropagatorOptions.canCorrupt()) {
                 // Did not pass the test
@@ -404,7 +407,7 @@ public class CorruptionPropagatorBlockEntity extends BlockEntity implements Game
 
         @Override
         public int getListenerRadius() {
-            return 16;
+            return ENTITY_RANGE;
         } // Where event are listened like death of PNG
 
         @Override
