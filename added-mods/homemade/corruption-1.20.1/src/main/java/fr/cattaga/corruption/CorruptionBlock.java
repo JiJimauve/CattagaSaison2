@@ -30,7 +30,7 @@ public class CorruptionBlock {
             new Block(
                     BlockBehaviour.Properties.of()
                             .randomTicks()
-                            .strength(-1.0f)
+                            .strength(20.0F, 1200.0F)
                             .sound(SoundType.SCULK)
                             .lightLevel(state -> 11)
                             .pushReaction(PushReaction.BLOCK)
