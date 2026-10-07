@@ -1,0 +1,13 @@
+name = "TAB"
+filename = "TAB v5.5.0 1.20 - 1.20.1.jar"
+side = "server"
+
+[download]
+url = "https://cdn.modrinth.com/data/gG7VFbG0/versions/2iO5cz27/TAB%20v5.5.0%201.20%20-%201.20.1.jar"
+hash-format = "sha512"
+hash = "ea96f18946628100430cd60504bb89aabd378d81922a325a82b9ea43358a44b1c7809008edb0fc97162d8151555f58cc1b48647ef1f8ba3f7e7752db675f91ad"
+
+[update]
+[update.modrinth]
+mod-id = "gG7VFbG0"
+version = "2iO5cz27"

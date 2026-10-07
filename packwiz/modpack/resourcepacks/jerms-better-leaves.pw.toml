@@ -1,0 +1,13 @@
+name = "Jerm's Better Leaves"
+filename = "JermsyBoy's Better Leaves V3.5-1.21.8.zip"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/8y0kkP7B/versions/zVIisrZM/JermsyBoy%27s%20Better%20Leaves%20V3.5-1.21.8.zip"
+hash-format = "sha512"
+hash = "727998f72272abb1c1d5d8bc5cae32052761fd1a8d7c4075662fe979a2be904453ecc0161eddcfbaba80c93a32078067800273d0406ab06e9ddee818b6beeafa"
+
+[update]
+[update.modrinth]
+mod-id = "8y0kkP7B"
+version = "zVIisrZM"

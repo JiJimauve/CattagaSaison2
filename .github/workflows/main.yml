@@ -1,0 +1,35 @@
+name: Push
+on:
+  push:
+    branches:
+      - main
+      - 'xurei/**'
+    tags:
+      - '*'
+permissions:
+  contents: write
+
+jobs:
+  build-modpack:
+    name: Build Modpack 🧱
+    runs-on: ubuntu-26.04
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: 📦 Build with packwiz
+        id: check
+        run: |
+          cd packwiz/modpack
+          ../packwiz modrinth export
+
+      - name: 📡 Upload Modpack
+        uses: actions/upload-artifact@v7
+        with:
+          name: Cattaga-2.0.0-modrinth
+          path: ${{ github.workspace }}/packwiz/modpack/*.mrpack

@@ -1,0 +1,13 @@
+name = "Seafoam's Dyeable Blocks"
+filename = "seafoamsdyeableblocks-1.4.2-forge-fabric.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/cqzBP1Uu/versions/wWvQKohT/seafoamsdyeableblocks-1.4.2-forge-fabric.jar"
+hash-format = "sha512"
+hash = "fee6b0f2b56e0408679e2d21dfaae84e31a71eac1232784e12b54c9756feea37edcea24f6ceae94e12c47b81c416a105c7645791bdb089f95eb3fe4ff4562064"
+
+[update]
+[update.modrinth]
+mod-id = "cqzBP1Uu"
+version = "wWvQKohT"

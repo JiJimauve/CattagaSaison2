@@ -1,0 +1,13 @@
+name = "Phone : MC Device"
+filename = "minedevice-fabric-1.1.1-pre.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/9p54YpdW/versions/bVWBvaBp/minedevice-fabric-1.1.1-pre.jar"
+hash-format = "sha512"
+hash = "fa0d95d9f590f10add27897a500e376d65fd6d56a2308e2cd8994d13ac380bf5bcaf0d07ff45e0768ceda34867c66f987a9e3a1e7af1d3cd46510dfa3cad612e"
+
+[update]
+[update.modrinth]
+mod-id = "9p54YpdW"
+version = "bVWBvaBp"
