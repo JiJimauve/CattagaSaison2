@@ -22,13 +22,45 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: 📦 Build with packwiz
-        id: check
+      - name: validate gradle wrapper
+        uses: gradle/actions/wrapper-validation@v6
+      - name: setup jdk
+        uses: actions/setup-java@v5
+        with:
+          java-version: '25'
+          distribution: 'microsoft'
+
+      - name: "🛠️👁️‍🗨 Build corruption mod"
+        id: build-corruption
+        run: |
+          .github/scripts/build_corruption.sh
+          cp ${{ github.workspace }}/added-mods/homemade/corruption-1.20.1/build/libs/corruption-1.0.0.jar ${{ github.workspace }}/packwiz/modpack/mods/
+
+      - name: "🛠️📱 Build Phone mod"
+        id: build-phone
+        run: |
+          .github/scripts/build_phone.sh
+          cp ${{ github.workspace }}/MC-Device/fabric/build/libs/minedevice-fabric-1.1.3-pre.jar ${{ github.workspace }}/packwiz/modpack/mods/
+
+      - name: "📦 Build with packwiz"
+        id: package
         run: |
           cd packwiz/modpack
           ../packwiz modrinth export
 
-      - name: 📡 Upload Modpack
+      - name: "📡👁️‍🗨 [Corruption] Upload Build artifacts"
+        uses: actions/upload-artifact@v7
+        with:
+          name: Corruption-Artifacts
+          path: ${{ github.workspace }}/added-mods/homemade/corruption-1.20.1/build/libs/
+
+      - name: "📡📱 [Phone] Upload Build artifacts"
+        uses: actions/upload-artifact@v7
+        with:
+          name: Phone-Artifacts
+          path: ${{ github.workspace }}/MC-Device/fabric/build/libs/
+
+      - name: "📡 Upload Modpack"
         uses: actions/upload-artifact@v7
         with:
           name: Cattaga-2.0.0-modrinth
