@@ -1,6 +1,7 @@
 {
   "block.corruption.corruptionblock": "Weird block ... seems alive ?",
   "block.corruption.corruptionpropagatorblock": "Weird block ... seems alive ?",
+  "block.corruption.corruptionpropagatoroffblock": "Weird block ...",
   "block.corruption.corruptioneggblock": "Weird block ... seems alive ?",
   "block.corruption.corruptionlichenblock": "Weird moss ... seems alive ?",
   "block.corruption.corruptionveinblock": "Weird moss ... seems alive ?"

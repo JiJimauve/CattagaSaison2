@@ -1,6 +1,7 @@
 package fr.cattaga.corruption;
 
 import com.mojang.datafixers.types.Type;
+import fr.cattaga.corruption.block.corruption.egg.CorruptionEggBlock;
 import fr.cattaga.corruption.block.corruption.propagator.CorruptionPropagatorBlock;
 import fr.cattaga.corruption.block.corruption.propagator.CorruptionPropagatorBlockEntity;
 import fr.cattaga.corruption.block.corruption.vein.CorruptionVeinBlock;
@@ -42,7 +43,7 @@ public class CorruptionBlock {
 
 
     public static final Block CORRUPTION_EGG_BLOCK = registerBlock(
-            new Block(
+            new CorruptionEggBlock(
                     BlockBehaviour.Properties.of()
                             .randomTicks()
                             .strength(-1.0f)
@@ -52,6 +53,19 @@ public class CorruptionBlock {
 
             ),
             "corruptioneggblock",
+            true
+    );
+
+    public static final Block CORRUPTION_PROPAGATOR_OFF_BLOCK = registerBlock(
+            new Block(
+                    BlockBehaviour.Properties.of()
+                            .strength(-1.0f)
+                            .sound(SoundType.SCULK)
+                            .lightLevel(state -> 11)
+                            .pushReaction(PushReaction.BLOCK)
+
+            ),
+            "corruptionpropagatoroffblock",
             true
     );
 

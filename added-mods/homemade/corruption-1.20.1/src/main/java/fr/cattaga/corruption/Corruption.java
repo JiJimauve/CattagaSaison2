@@ -1,8 +1,10 @@
 package fr.cattaga.corruption;
 
+import fr.cattaga.corruption.block.corruption.spreader.CorruptionSpreader;
 import fr.cattaga.corruption.command.CorruptionCommand;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.resources.ResourceLocation;
 
 import org.slf4j.Logger;
@@ -26,15 +28,17 @@ public class Corruption implements ModInitializer {
         LOGGER.debug("Cattaga : C Debugging Introduction Msg");
         LOGGER.trace("Cattaga : C Trace Introduction Msg");
 
-
         // Create Blocks
         CorruptionBlock.initialize(); // Force registering of Block
-
 
         // Create Cmd
         CorruptionCommand.initialize();
 
+        // Register Central Tick of CorruptionSpreader
+        CorruptionSpreader.onInitialize();
+        ServerTickEvents.END_SERVER_TICK.register(CorruptionSpreader::onServerTick);
     }
+
 
     public static ResourceLocation generateResourceLocation(String path) {
         return new ResourceLocation(MOD_ID, path);

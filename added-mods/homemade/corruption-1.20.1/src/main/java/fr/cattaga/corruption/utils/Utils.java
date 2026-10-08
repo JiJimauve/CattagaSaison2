@@ -11,6 +11,30 @@ import net.minecraft.world.phys.Vec3;
 public class Utils {
 
     /**
+     * Simple Holder
+     */
+    public static class BlockPosState {
+        public final BlockPos pos;
+        public final BlockState state;
+        public BlockPosState(BlockPos p, BlockState s) {
+            pos = p;
+            state = s;
+        }
+    }
+
+
+    /**
+     * Simple Holder
+     */
+    public static class BlockPosStateDir extends BlockPosState{
+        public final int direction;
+        public BlockPosStateDir(BlockPos p, BlockState s, int dir) {
+            super(p,s);
+            direction = dir;
+        }
+    }
+
+    /**
      * Return the first above block of InitialPos that is an Air Block (null if not found)
      * @param serverLevel To get the Block
      * @param intialPos The Initial Pos
