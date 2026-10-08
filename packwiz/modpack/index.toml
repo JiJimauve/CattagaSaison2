@@ -2881,11 +2881,6 @@ hash = "ac014dfa07ca7716893c200aa128062220012441992683c35e6e7ec966d01069"
 metafile = true
 
 [[files]]
-file = "mods/mc-device.pw.toml"
-hash = "c575da1603900107b058f62ba86d3d98bd8d84ae5a92a460999e7d6bb1ae9aaa"
-metafile = true
-
-[[files]]
 file = "mods/memoryleakfix.pw.toml"
 hash = "ede2f61d6b592f44294fa8790c2f050729c487aa86aba09034f2ef30d45e0e93"
 metafile = true
