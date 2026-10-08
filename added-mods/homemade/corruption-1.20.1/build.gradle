@@ -14,11 +14,19 @@ repositories {
 loom {
 	splitEnvironmentSourceSets()
 
+    log4jConfigs.from "log4j-dev.xml"
+
 	mods {
 		"corruption" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
+	}
+}
+
+fabricApi {
+	configureDataGeneration {
+		client = true
 	}
 }
 

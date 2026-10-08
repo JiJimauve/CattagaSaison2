@@ -1,4 +1,4 @@
-package fr.cattaga.mixin;
+package fr.cattaga.corruption.mixin;
 
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;

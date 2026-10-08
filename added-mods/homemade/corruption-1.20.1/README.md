@@ -1,8 +1,12 @@
 # Corruption
 
-## Setup
+Une vision Cattaga de la corruption
 
-For setup instructions, please see the [Fabric Documentation page](https://docs.fabricmc.net/develop/getting-started/creating-a-project#setting-up) related to the IDE that you are using.
+## Ajout de plusieurs blocs 
+
+Corruption Bloc : Le bloc de base qui représente la corruption
+Corruption Moss : Le bloc sous forme de tapis qui représente la corruption
+
 
 ## License
 

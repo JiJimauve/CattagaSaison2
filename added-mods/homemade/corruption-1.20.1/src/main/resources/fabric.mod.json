@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "corruption",
 	"version": "${version}",
-	"name": "Corruption",
+	"name": "corruption",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
 		"Me!"
@@ -16,10 +16,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"fr.cattaga.Corruption"
+			"fr.cattaga.corruption.Corruption"
 		],
 		"client": [
-			"fr.cattaga.client.CorruptionClient"
+			"fr.cattaga.corruption.client.CorruptionClient"
+		],
+		"fabric-datagen": [
+			"fr.cattaga.corruption.client.CorruptionDataGenerator"
 		]
 	},
 	"mixins": [
