@@ -1,0 +1,56 @@
+name: Push
+on:
+  push:
+    branches:
+      - main
+      - 'xurei/**'
+    tags:
+      - '*'
+permissions:
+  contents: write
+
+jobs:
+  build-project:
+    name: Build Project 🧱
+    uses: ./.github/workflows/build-custom-mod.yml
+    secrets: inherit
+    permissions:
+      contents: read
+
+  package-modpack:
+    name: Package Modpack 📦
+    runs-on: ubuntu-26.04
+    needs: build-project
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Download Build Artifacts 📥
+        uses: actions/download-artifact@v8
+        id: download
+
+      - name: "Install custom mods in modpack"
+        id: install-mods
+        run: |
+          cd phone-artifacts
+          ls -la
+          cd ..
+          cp phone-artifacts/minedevice-fabric-1.1.3-pre.jar packwiz/modpack/mods
+          cp corruption-artifacts/corruption-1.0.0.jar packwiz/modpack/mods
+
+      - name: "📦 Build with packwiz"
+        id: package
+        run: |
+          cd packwiz/modpack
+          ../packwiz modrinth export
+
+      - name: "📡 Upload Modpack"
+        uses: actions/upload-artifact@v7
+        with:
+          name: Cattaga-2.0.0-modrinth
+          path: ${{ github.workspace }}/packwiz/modpack/*.mrpack

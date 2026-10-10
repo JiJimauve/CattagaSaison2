@@ -1,0 +1,43 @@
+name: Build Custom Mods
+on:
+  workflow_call:
+
+jobs:
+  build-custom-mod:
+    name: 🛠️
+    strategy:
+      matrix:
+        mod_name: [ corruption, phone ]
+        include:
+          - mod_name: corruption
+            mod_build_path: added-mods/homemade/corruption-1.20.1/build/libs/
+          - mod_name: phone
+            mod_build_path: MC-Device/fabric/build/libs/
+    runs-on: ubuntu-26.04
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: validate gradle wrapper
+        uses: gradle/actions/wrapper-validation@v6
+      - name: setup jdk
+        uses: actions/setup-java@v5
+        with:
+          java-version: '25'
+          distribution: 'microsoft'
+
+      - name: "🛠 Build mod"
+        id: build-mod
+        run: |
+          .github/scripts/build_${{ matrix.mod_name }}.sh
+
+      - name: "📡 Upload Build artifacts"
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.mod_name }}-artifacts
+          path: ${{ github.workspace }}/${{ matrix.mod_build_path }}

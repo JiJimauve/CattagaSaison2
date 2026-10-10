@@ -1,0 +1,13 @@
+name = "FlyCommand"
+filename = "flycommand-1.0.7.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/wKvSMLf0/versions/8NMWJ01E/flycommand-1.0.7.jar"
+hash-format = "sha512"
+hash = "21d7ca9178efe2d45629fd97e451da2cc6f2183cbc627e89ef64e249d9fe7f158d1dae85f90f06e8033885db2b721b8e5db13c49f39636da8ab7cbbc8bc4972c"
+
+[update]
+[update.modrinth]
+mod-id = "wKvSMLf0"
+version = "8NMWJ01E"

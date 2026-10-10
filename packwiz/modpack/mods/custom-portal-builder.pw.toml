@@ -1,0 +1,13 @@
+name = "Custom Portal Builder"
+filename = "customportalsmod-1.0.0-1.20.1.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/E93rNbXb/versions/FWAp8wUG/customportalsmod-1.0.0-1.20.1.jar"
+hash-format = "sha512"
+hash = "d2ac15fee834be5c8982ae7eb25ba4a8400cf76a72f8b5f9e007ba4c30f5107bc97b1c290093eb25a74c46f159360724b3d744fb04c6bf750b321baecc792a78"
+
+[update]
+[update.modrinth]
+mod-id = "E93rNbXb"
+version = "FWAp8wUG"

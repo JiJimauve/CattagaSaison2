@@ -1,0 +1,13 @@
+name = "Name Changer"
+filename = "NameChanger1.20.1-fabric-2.0.0.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/yp7PvdKl/versions/gN2rJhoU/NameChanger1.20.1-fabric-2.0.0.jar"
+hash-format = "sha512"
+hash = "f734b8da83382c087c464700c2fee83788547407ec1dbcdaeca27b914c732c980d0bd7313009886c2d5e82d82dedca62dc0ff1edbbb1f96fcd3433eda8d84df0"
+
+[update]
+[update.modrinth]
+mod-id = "yp7PvdKl"
+version = "gN2rJhoU"

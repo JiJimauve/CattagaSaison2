@@ -1,0 +1,488 @@
+{
+  "ambiant.metro": {
+    "subtitle": "ambiant.metro",
+    "sounds": [
+      "kubejs:ambiantmetro"
+    ]
+  },
+  "ambiant.train": {
+    "subtitle": "ambiant.train",
+    "sounds": [
+      "kubejs:ambianttrain"
+    ]
+  },
+  "ambiant.trainshort": {
+    "subtitle": "ambiant.trainshort",
+    "sounds": [
+      "kubejs:ambianttrainshort"
+    ]
+  },
+  "ambiant.metro.descendre": {
+    "subtitle": "ambiant.metro.descendre",
+    "sounds": [
+      "kubejs:metrodescendre"
+    ]
+  },
+  "ambiant.announce.ratp": {
+    "subtitle": "ambiant.announce.ratp",
+    "sounds": [
+      "kubejs:annonceratp"
+    ]
+  },
+  "ambiant.announce.sncf": {
+    "subtitle": "ambiant.announce.sncf",
+    "sounds": [
+      "kubejs:annoncesncf"
+    ]
+  },
+  "ambiant.arret": {
+    "subtitle": "ambiant.announce.sncf",
+    "sounds": [
+      "kubejs:arret1",
+      "kubejs:arret2",
+      "kubejs:arret3",
+      "kubejs:arret4",
+      "kubejs:arret5",
+      "kubejs:arret6",
+      "kubejs:arret7",
+      "kubejs:arret8"
+    ]
+  },
+  "entity.pp2.beep1": {
+    "subtitle": "entity.pp2.beep1",
+    "sounds": [
+      "kubejs:beep1"
+    ]
+  },
+  "entity.pp2.beep2": {
+    "subtitle": "entity.pp2.beep2",
+    "sounds": [
+      "kubejs:beep2"
+    ]
+  },
+  "entity.pp2.beep3": {
+    "subtitle": "entity.pp2.beep3",
+    "sounds": [
+      "kubejs:beep3"
+    ]
+  },
+  "entity.pp2.danger": {
+    "subtitle": "entity.pp2.danger",
+    "sounds": [
+      "kubejs:danger"
+    ]
+  },
+  "entity.pp2.beep4": {
+    "subtitle": "entity.pp2.beep4",
+    "sounds": [
+      "kubejs:beep4"
+    ]
+  },
+  "entity.pp2.beep5": {
+    "subtitle": "entity.pp2.beep5",
+    "sounds": [
+      "kubejs:beep5"
+    ]
+  },
+  "entity.pp2.heal": {
+    "subtitle": "entity.pp2.heal",
+    "sounds": [
+      "kubejs:smallmedkit1"
+    ]
+  },
+  "entity.pp2.charge": {
+    "subtitle": "entity.pp2.charge",
+    "sounds": [
+      "kubejs:suitcharge1"
+    ]
+  },
+  "entity.pp2.warn1": {
+    "subtitle": "entity.pp2.warn1",
+    "sounds": [
+      "kubejs:warn1"
+    ]
+  },
+  "entity.pp2.warn2": {
+    "subtitle": "entity.pp2.warn2",
+    "sounds": [
+      "kubejs:warn2"
+    ]
+  },
+  "entity.pp2.warn3": {
+    "subtitle": "entity.pp2.warn3",
+    "sounds": [
+      "kubejs:warn3"
+    ]
+  },
+  "entity.pp2.pipotam": {
+    "subtitle": "entity.pp2.pipotam",
+    "sounds": [
+      "kubejs:pipotam"
+    ]
+  },
+  "entity.pp2.pipotamhigh": {
+    "subtitle": "entity.pp2.pipotamhigh",
+    "sounds": [
+      "kubejs:pipotamhigh"
+    ]
+  },
+  "entity.pp2.pi": {
+    "subtitle": "entity.pp2.pi",
+    "sounds": [
+      "kubejs:pi"
+    ]
+  },
+  "entity.pp2.po": {
+    "subtitle": "entity.pp2.po",
+    "sounds": [
+      "kubejs:po"
+    ]
+  },
+  "entity.pp2.tam": {
+    "subtitle": "entity.pp2.tam",
+    "sounds": [
+      "kubejs:tam"
+    ]
+  },
+  "entity.pp2.energieeffect": {
+    "subtitle": "entity.pp2.energieeffect",
+    "sounds": [
+      "kubejs:energieeffect"
+    ]
+  },
+  "entity.pp2.rendenergie": {
+    "subtitle": "entity.pp2.rendenergie",
+    "sounds": [
+      "kubejs:rendenergie"
+    ]
+  },
+  "entity.pp2.donneenergie": {
+    "subtitle": "entity.pp2.donneenergie",
+    "sounds": [
+      "kubejs:donneenergie"
+    ]
+  },
+  "entity.pp2.menace1": {
+    "subtitle": "entity.pp2.menace1",
+    "sounds": [
+      "kubejs:menace1"
+    ]
+  },
+  "entity.pp2.menace2": {
+    "subtitle": "entity.pp2.menace2",
+    "sounds": [
+      "kubejs:menace2"
+    ]
+  },
+  "entity.pp2.ba": {
+    "subtitle": "entity.pp2.ba",
+    "sounds": [
+      "kubejs:ba_badfeeling",
+      "kubejs:ba_bigplace",
+      "kubejs:ba_later",
+      "kubejs:ba_beer",
+      "kubejs:ba_seeya"
+    ]
+  },
+  "entity.pp2.etonnant": {
+    "subtitle": "entity.pp2.etonnant",
+    "sounds": [
+      "kubejs:matopip"
+    ]
+  },
+  "entity.pp2.etonnant1": {
+    "subtitle": "entity.pp2.etonnant1",
+    "sounds": [
+      "kubejs:mat"
+    ]
+  },
+  "entity.pp2.etonnant2": {
+    "subtitle": "entity.pp2.etonnant2",
+    "sounds": [
+      "kubejs:op"
+    ]
+  },
+  "entity.pp2.etonnant3": {
+    "subtitle": "entity.pp2.etonnant3",
+    "sounds": [
+      "kubejs:ip"
+    ]
+  },
+  "entity.pp2.chalut": {
+    "subtitle": "entity.pp2.chalut",
+    "sounds": [
+      "kubejs:chalut"
+    ]
+  },
+    "entity.pp2.success": {
+    "subtitle": "entity.pp2.success",
+    "sounds": [
+      "kubejs:success"
+    ]
+  },
+    "entity.pp2.revive": {
+    "subtitle": "entity.pp2.revive",
+    "sounds": [
+      "kubejs:revive"
+    ]
+  },
+    "entity.pp2.prayer": {
+    "subtitle": "entity.pp2.prayer",
+    "sounds": [
+      "kubejs:prayer"
+    ]
+  },
+    "music.dog_in_space_wiouhh": {
+    "subtitle": "music.dog_in_space_wiouhh",
+    "sounds": [
+      {
+        "name": "kubejs:wiouhh_dog_in_space",
+        "stream": true
+      }
+    ]
+  },
+  "music.balladedansespace_jimauve": {
+    "subtitle": "music.balladedansespace_jimauve",
+    "sounds": [
+      {
+        "name": "kubejs:jimauve_balladedansespace",
+        "stream": true
+      }
+    ]
+  },
+   "music.catboyinspace_tiluh": {
+    "subtitle": "music.catboyinspace_tiluh",
+    "sounds": [
+      {
+        "name": "kubejs:tiluh_catboyinspace",
+        "stream": true
+      }
+    ]
+  },
+  "music.theofficebardcore_zakium": {
+    "subtitle": "music.theofficebardcore_zakium",
+    "sounds": [
+      {
+        "name": "kubejs:zakium_theofficebardcore",
+        "stream": true
+      }
+    ]
+  },
+  "music.forgotmyshovel_roguie": {
+    "subtitle": "music.forgotmyshovel_roguie",
+    "sounds": [
+      {
+        "name": "kubejs:roguie_forgot_my_shovel",
+        "stream": true
+      }
+    ]
+  },
+  "music.tinybitofwarmth_bricolesbo": {
+    "subtitle": "music.tinybitofwarmth_bricolesbo",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo_tiny_bit_of_warmth",
+        "stream": true
+      }
+    ]
+  },
+  "music.detoutlesmots_bricolesbo": {
+    "subtitle": "music.detoutlesmots_bricolesbo",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo_de_tout_les_mots",
+        "stream": true
+      }
+    ]
+  },
+  "music.detoutlesmots1l_bricolesbo": {
+    "subtitle": "music.detoutlesmots1l_bricolesbo",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo_de_tout_les_mots-1-loud",
+        "stream": true
+      }
+    ]
+  },
+  "music.detoutlesmots1_bricolesbo": {
+    "subtitle": "music.detoutlesmots1_bricolesbo",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo_de_tout_les_mots-1",
+        "stream": true
+      }
+    ]
+  },
+  "music.detoutlesmots2_bricolesbo": {
+    "subtitle": "music.detoutlesmots2_bricolesbo",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo_de_tout_les_mots-2",
+        "stream": true
+      }
+    ]
+  },
+  "music.detoutlesmots3_bricolesbo": {
+    "subtitle": "music.detoutlesmots3_bricolesbo",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo_de_tout_les_mots-3",
+        "stream": true
+      }
+    ]
+  },
+  "music.detoutlesmots23_bricolesbo": {
+    "subtitle": "music.detoutlesmots23_bricolesbo",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo_de_tout_les_mots-23",
+        "stream": true
+      }
+    ]
+  },
+  "music.gettingthere_bricolesbo": {
+    "subtitle": "music.gettingthere_bricolesbo",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo_getting_there",
+        "stream": true
+      }
+    ]
+  },
+  "music.gettingthere1_bricolesbo": {
+    "subtitle": "music.gettingthere1_bricolesbo",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo_getting_there-1",
+        "stream": true
+      }
+    ]
+  },
+  "music.gettingthere2_bricolesbo": {
+    "subtitle": "music.gettingthere2_bricolesbo",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo_getting_there-2",
+        "stream": true
+      }
+    ]
+  },
+  "music.ilsepassedeschoses_islew": {
+    "subtitle": "music.ilsepassedeschoses_islew",
+    "sounds": [
+      {
+        "name": "kubejs:islew_il_se_passe_des_choses",
+        "stream": true
+      }
+    ]
+  }
+  
+  ,
+  "music.chasingwhat_padeur": {
+    "subtitle": "music.chasingwhat_padeur",
+    "sounds": [
+      {
+        "name": "kubejs:padeure_chasingwhat",
+        "stream": true
+      }
+    ]
+  }
+  
+  ,
+  "music.kssss_padeur": {
+    "subtitle": "music.kssss_padeur",
+    "sounds": [
+      {
+        "name": "kubejs:padeure_kssss",
+        "stream": true
+      }
+    ]
+  }
+  
+ ,
+  "music.ane_trotro_du_tiek": {
+    "subtitle": "music.ane_trotro_du_tiek",
+    "sounds": [
+      {
+        "name": "kubejs:ane_trotro_du_tiek",
+        "stream": true
+      }
+    ]
+  },
+  "music.hhou_song_jimauve": {
+    "subtitle": "music.hhou_song_jimauve",
+    "sounds": [
+      {
+        "name": "kubejs:jimauve_hhou_song",
+        "stream": true
+      }
+    ]
+  },
+  "music.mamy_song_get_cosy": {
+    "subtitle": "music.mamy_song_get_cosy",
+    "sounds": [
+      {
+        "name": "kubejs:get_cosy_mamysong",
+        "stream": true
+      }
+    ]
+  },
+  "music.cite_dor_drill_lotte": {
+    "subtitle": "music.cite_dor_drill_lotte",
+    "sounds": [
+      {
+        "name": "kubejs:cite_dor_drill_lotte",
+        "stream": true
+      }
+    ]
+  }
+  
+  ,
+  "music.bricolesbo_2025_10_11_r3": {
+    "subtitle": "music.bricolesbo_2025_10_11_r3",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo_2025_10_11_r3",
+        "stream": true
+      }
+    ]
+  },
+  "music.bricolesbo_2025_11_06_r9": {
+    "subtitle": "music.bricolesbo_2025_11_06_r9",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo_2025_11_06_r9",
+        "stream": true
+      }
+    ]
+  },
+  "music.bricolesbo-aaaa": {
+    "subtitle": "music.bricolesbo-aaaa",
+    "sounds": [
+      {
+        "name": "kubejs:bricolesbo-aaaa",
+        "stream": true
+      }
+    ]
+  },
+  
+   "music.lena-bonanniversaire": {
+    "subtitle": "music.lena-bonanniversaire",
+    "sounds": [
+      {
+        "name": "kubejs:lena-bonanniversaire",
+        "stream": true
+      }
+    ]
+  },
+  
+   "music.lena-kazu": {
+    "subtitle": "music.lena-kazu",
+    "sounds": [
+      {
+        "name": "kubejs:lena-kazu",
+        "stream": true
+      }
+    ]
+  }
+}

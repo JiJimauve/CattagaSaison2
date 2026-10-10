@@ -1,0 +1,13 @@
+name = "Proximity Text Chat"
+filename = "ProximityTextChat-1.20.1-1.3FC.jar"
+side = "server"
+
+[download]
+url = "https://cdn.modrinth.com/data/KYqJsEV7/versions/WNRvGUdJ/ProximityTextChat-1.20.1-1.3FC.jar"
+hash-format = "sha512"
+hash = "bfadb493ff374751ef196c647a6a7fdb7203df8375f1d3c360e8b582e38d6683ff9a91eda61794e3c136f7f5f8194515ce6be69b4e6a91e27133225c1830c2bf"
+
+[update]
+[update.modrinth]
+mod-id = "KYqJsEV7"
+version = "WNRvGUdJ"

@@ -1,0 +1,13 @@
+name = "Status"
+filename = "status-fabric-1.20.1-1.0.8.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/b93awgkg/versions/GUpw0Opx/status-fabric-1.20.1-1.0.8.jar"
+hash-format = "sha512"
+hash = "89561a9259ff8e4030a936319530d2d9ed031d9cd1ec257f7b6ccd8c5a3997d9fdd81e9d9f4d3183685222942a8dbac09408e4e4bee95b912a5a22b21ed42e5a"
+
+[update]
+[update.modrinth]
+mod-id = "b93awgkg"
+version = "GUpw0Opx"

@@ -1,0 +1,12 @@
+name = "Cattaga-2.0.0"
+version = "2.0.0"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "9dd567113e382d50f3db39eabd17f6b869599135ac2252889cb555cad38c5ae9"
+
+[versions]
+fabric = "0.19.5"
+minecraft = "1.20.1"
