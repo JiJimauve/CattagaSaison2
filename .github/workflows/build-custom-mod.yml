@@ -23,13 +23,19 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: validate gradle wrapper
-        uses: gradle/actions/wrapper-validation@v6
       - name: setup jdk
         uses: actions/setup-java@v5
         with:
           java-version: '25'
           distribution: 'microsoft'
+
+      - name: setup gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+
+      - name: validate gradle wrapper
+        uses: gradle/actions/wrapper-validation@v6
 
       - name: "🛠 Build mod"
         id: build-mod
