@@ -1,0 +1,13 @@
+name = "More Stairs Variants"
+filename = "mysticrift_more_stairs_variants-9.16.4-fabric-1.20.1.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/lFkNlgDR/versions/YWMXvWi4/mysticrift_more_stairs_variants-9.16.4-fabric-1.20.1.jar"
+hash-format = "sha512"
+hash = "5d3de4288934ef80848f4e3e79e8e18dcba3a802a90eee475b397f961b8ebf1ffe79f7d3ccd318196875c0341e5e04e29546b396ceb919cfea9bc9a3acc20e91"
+
+[update]
+[update.modrinth]
+mod-id = "lFkNlgDR"
+version = "YWMXvWi4"

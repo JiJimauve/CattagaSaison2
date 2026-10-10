@@ -1,11 +1,11 @@
-name = "Cattaga-2.0.0"
-version = "2.0.0"
+name = "CattagaS2"
+version = "2.0.1"
 pack-format = "packwiz:1.1.0"
 
 [index]
 file = "index.toml"
 hash-format = "sha256"
-hash = "9dd567113e382d50f3db39eabd17f6b869599135ac2252889cb555cad38c5ae9"
+hash = "388b1c9c5c7a9ca1edaba256793e8b5c8a4ca78f35166c8403731aafb5676c4d"
 
 [versions]
 fabric = "0.19.5"

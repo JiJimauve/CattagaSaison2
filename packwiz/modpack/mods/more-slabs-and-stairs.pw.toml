@@ -1,0 +1,13 @@
+name = "More Slabs And Stairs"
+filename = "more-slabs-and-stairs-1.1.1.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/eDDc9lJZ/versions/HYCrXL1A/more-slabs-and-stairs-1.1.1.jar"
+hash-format = "sha512"
+hash = "7d001c14a6a0c693d1cfef66789dad5d6f875f36019cabbb3af6b3f65571d6fdec32d5e923796b43c3cf27315b119796229fdeadefff674485661f970e6ebe56"
+
+[update]
+[update.modrinth]
+mod-id = "eDDc9lJZ"
+version = "HYCrXL1A"

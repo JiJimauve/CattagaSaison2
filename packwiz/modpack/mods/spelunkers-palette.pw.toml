@@ -1,0 +1,13 @@
+name = "Spelunker's Palette"
+filename = "spelunkers_palette-1.2.1.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/OWNJpWZE/versions/TgO6TwP5/spelunkers_palette-1.2.1.jar"
+hash-format = "sha512"
+hash = "bdb9bda11ef5df85963d2e89bd947e2f0547c8407634838ebd32aa4aae0e5a4450317a9163490a8bc433d8116d95bfa85e7c21d91a4c7a34f76752cfb84b04a5"
+
+[update]
+[update.modrinth]
+mod-id = "OWNJpWZE"
+version = "TgO6TwP5"

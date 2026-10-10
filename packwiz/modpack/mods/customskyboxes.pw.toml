@@ -1,0 +1,13 @@
+name = "Custom Skyboxes"
+filename = "customskyboxes-mc1.20.1-1.0.3.1.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/PJflrYWw/versions/n1E6LGs1/customskyboxes-mc1.20.1-1.0.3.1.jar"
+hash-format = "sha512"
+hash = "a36d0eaac9ab32c26685c403250500846854083d0bf63a6cd373683fd0c62617809730b73741425be9bf54569768442d4c85d76c5375310604d3b11ad7cbf0df"
+
+[update]
+[update.modrinth]
+mod-id = "PJflrYWw"
+version = "n1E6LGs1"
