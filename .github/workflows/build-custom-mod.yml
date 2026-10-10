@@ -32,10 +32,7 @@ jobs:
       - name: setup gradle
         uses: gradle/actions/setup-gradle@v6
         with:
-          cache-provider: basic
-
-      - name: validate gradle wrapper
-        uses: gradle/actions/wrapper-validation@v6
+          cache-provider: enhanced
 
       - name: "🛠 Build mod"
         id: build-mod
