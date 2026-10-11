@@ -15,10 +15,6 @@ public interface PhoneCallPoseAccess {
 
     void minedevice$setPhoneCameraSelfieActive(boolean active);
 
-    boolean minedevice$isPhoneBankQrPoseActive();
-
-    void minedevice$setPhoneBankQrPoseActive(boolean active);
-
     boolean minedevice$isPhoneChatQrPoseActive();
 
     void minedevice$setPhoneChatQrPoseActive(boolean active);
@@ -59,26 +55,6 @@ public interface PhoneCallPoseAccess {
     static void setPhoneCameraSelfieActive(Player player, boolean active) {
         if (player instanceof PhoneCallPoseAccess access) {
             access.minedevice$setPhoneCameraSelfieActive(active);
-        }
-    }
-
-    static boolean isPhoneBankQrPoseActive(Player player) {
-        return player instanceof PhoneCallPoseAccess access && access.minedevice$isPhoneBankQrPoseActive();
-    }
-
-    static void setPhoneBankQrPoseActive(Player player, boolean active) {
-        if (player instanceof PhoneCallPoseAccess access) {
-            access.minedevice$setPhoneBankQrPoseActive(active);
-        }
-    }
-
-    static boolean isPhoneChatQrPoseActive(Player player) {
-        return player instanceof PhoneCallPoseAccess access && access.minedevice$isPhoneChatQrPoseActive();
-    }
-
-    static void setPhoneChatQrPoseActive(Player player, boolean active) {
-        if (player instanceof PhoneCallPoseAccess access) {
-            access.minedevice$setPhoneChatQrPoseActive(active);
         }
     }
 

@@ -57,12 +57,10 @@ public final class MinedeviceClient {
         PhoneNetworkingClient.init();
         initOptionalVoiceHooks();
         ClientTickEvent.CLIENT_POST.register(MinedeviceClient::onClientTick);
-        ClientTickEvent.CLIENT_PRE.register(MinedeviceClient::onClientTickPre);
         ClientPlayerEvent.CLIENT_PLAYER_QUIT.register((player) -> {
             homePhoneSneakUseDown = false;
             PhoneNetworkingClient.clearClientState();
             PhoneClientHooks.clearMobileCallHotbarLock();
-            PhoneClientHooks.clearBankReceiveWorldState(false);
             tickMegaphoneVoice(false);
             tickPhoneCallVoice(false);
         });
@@ -70,14 +68,9 @@ public final class MinedeviceClient {
             homePhoneSneakUseDown = false;
             PhoneNetworkingClient.clearClientState();
             PhoneClientHooks.clearMobileCallHotbarLock();
-            PhoneClientHooks.clearBankReceiveWorldState(false);
             shutdownMegaphoneVoice();
             shutdownPhoneCallVoice();
         });
-    }
-
-    private static void onClientTickPre(Minecraft minecraft) {
-        PhoneClientHooks.tickBankReceiveWorld(minecraft);
     }
 
     private static void onClientTick(Minecraft minecraft) {
@@ -260,10 +253,8 @@ public final class MinedeviceClient {
         propertyRegistered = true;
         ResourceLocation phoneCallPoseProperty = new ResourceLocation(Minedevice.MOD_ID, "call_pose");
         ResourceLocation phoneOnProperty = new ResourceLocation(Minedevice.MOD_ID, "screen_on");
-        ResourceLocation phoneQrProperty = new ResourceLocation(Minedevice.MOD_ID, "bank_qr");
-        ResourceLocation phoneChatQrProperty = new ResourceLocation(Minedevice.MOD_ID, "chat_qr");
         ResourceLocation megaphoneTootingProperty = new ResourceLocation(Minedevice.MOD_ID, "tooting");
-        ResourceLocation stackedProperty = new ResourceLocation(Minedevice.MOD_ID, "stacked");
+//        ResourceLocation stackedProperty = new ResourceLocation(Minedevice.MOD_ID, "stacked");
         ItemPropertiesRegistry.register(ModItems.PHONE.get(), phoneCallPoseProperty,
                 (stack, level, entity, seed) -> entity != null && PhoneClientHooks.shouldUsePhoneCallPose(entity)
                         ? 1.0F
@@ -272,14 +263,14 @@ public final class MinedeviceClient {
                 (stack, level, entity, seed) -> entity != null && PhoneClientHooks.shouldUsePhoneOnModel(entity)
                         ? 1.0F
                         : 0.0F);
-        ItemPropertiesRegistry.register(ModItems.PHONE.get(), phoneQrProperty,
-                (stack, level, entity, seed) -> entity != null && PhoneClientHooks.shouldUsePhoneQrModel(entity)
-                        ? 1.0F
-                        : 0.0F);
-        ItemPropertiesRegistry.register(ModItems.PHONE.get(), phoneChatQrProperty,
-                (stack, level, entity, seed) -> entity != null && PhoneClientHooks.shouldUseChatQrModel(entity)
-                        ? 1.0F
-                        : 0.0F);
+//        ItemPropertiesRegistry.register(ModItems.PHONE.get(), phoneQrProperty,
+//                (stack, level, entity, seed) -> entity != null && PhoneClientHooks.shouldUsePhoneQrModel(entity)
+//                        ? 1.0F
+//                        : 0.0F);
+//        ItemPropertiesRegistry.register(ModItems.PHONE.get(), phoneChatQrProperty,
+//                (stack, level, entity, seed) -> entity != null && PhoneClientHooks.shouldUseChatQrModel(entity)
+//                        ? 1.0F
+//                        : 0.0F);
         ItemPropertiesRegistry.register(ModItems.MEGAPHONE.get(), megaphoneTootingProperty,
                 (stack, level, entity, seed) -> entity != null
                         && entity.isUsingItem()

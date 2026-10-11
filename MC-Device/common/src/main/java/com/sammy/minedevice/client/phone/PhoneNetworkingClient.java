@@ -252,7 +252,6 @@ public final class PhoneNetworkingClient {
         lastCameraPoseSelfie = false;
         screenOnInitialized = false;
         lastScreenOnActive = false;
-        PhoneClientHooks.clearBankReceiveWorldState(false);
     }
 
     public static void requestSync() {

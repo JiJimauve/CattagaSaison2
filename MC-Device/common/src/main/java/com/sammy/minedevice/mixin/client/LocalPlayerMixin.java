@@ -26,30 +26,6 @@ public abstract class LocalPlayerMixin {
             )
     )
     private boolean minedevice$allowSprintWhilePhoneCameraMoves(KeyMapping keyMapping) {
-        if (keyMapping != this.minecraft.options.keySprint || !isPhoneCameraMoveModeActive()) {
-            return keyMapping.isDown();
-        }
-
-        return isPhysicalKeyDown(keyMapping);
-    }
-
-    private boolean isPhoneCameraMoveModeActive() {
-        return this.minecraft.screen instanceof PhoneScreen phoneScreen
-                && phoneScreen.isCameraMoveModeActive();
-    }
-
-    private boolean isPhysicalKeyDown(KeyMapping keyMapping) {
-        long windowHandle = this.minecraft.getWindow().getWindow();
-        InputConstants.Key inputKey = InputConstants.getKey(keyMapping.saveString());
-
-        if (inputKey.getValue() == InputConstants.UNKNOWN.getValue()) {
-            return false;
-        }
-
-        return switch (inputKey.getType()) {
-            case KEYSYM -> InputConstants.isKeyDown(windowHandle, inputKey.getValue());
-            case MOUSE -> GLFW.glfwGetMouseButton(windowHandle, inputKey.getValue()) == GLFW.GLFW_PRESS;
-            default -> false;
-        };
+        return keyMapping.isDown();
     }
 }

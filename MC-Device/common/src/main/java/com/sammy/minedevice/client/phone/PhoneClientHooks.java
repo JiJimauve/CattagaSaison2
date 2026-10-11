@@ -20,9 +20,6 @@ public final class PhoneClientHooks {
     private static boolean mobileCallSlotLockActive;
     private static boolean mobileCallSlotLockOffhand;
     private static int mobileCallLockedHotbarSlot = -1;
-    private static boolean bankReceiveWorldActive;
-    private static boolean bankReceiveEscDown;
-    private static InteractionHand bankReceiveWorldHand = InteractionHand.MAIN_HAND;
 
     private PhoneClientHooks() {
     }
@@ -30,13 +27,6 @@ public final class PhoneClientHooks {
     public static void openScreen(InteractionHand hand) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft == null) {
-            return;
-        }
-        // While showing the QR to the world (bank "QR Receive" or chat "My QR"),
-        // right-clicking the phone dismisses it back to the game instead of reopening
-        // the screen. (ESC still reopens the phone — handled in tickBankReceiveWorld.)
-        if (bankReceiveWorldActive) {
-            clearBankReceiveWorldState(true);
             return;
         }
         minecraft.setScreen(new PhoneScreen(hand));
@@ -65,9 +55,7 @@ public final class PhoneClientHooks {
         LocalPlayer localPlayer = getLocalPlayer();
         if (entity instanceof Player player && player != localPlayer) {
             return (PhoneCallPoseAccess.isPhoneCallPoseActive(player)
-                    || PhoneCallPoseAccess.isPhoneCameraPoseActive(player)
-                    || PhoneCallPoseAccess.isPhoneBankQrPoseActive(player)
-                    || PhoneCallPoseAccess.isPhoneChatQrPoseActive(player))
+                    || PhoneCallPoseAccess.isPhoneCameraPoseActive(player))
                     && (isPhone(player.getMainHandItem()) || isPhone(player.getOffhandItem()));
         }
 
@@ -76,11 +64,6 @@ public final class PhoneClientHooks {
         }
 
         if (isMobileCallActive()) {
-            return isPhone(localPlayer.getMainHandItem()) || isPhone(localPlayer.getOffhandItem())
-                    || hasPhoneInHotbar(localPlayer);
-        }
-
-        if (bankReceiveWorldActive) {
             return isPhone(localPlayer.getMainHandItem()) || isPhone(localPlayer.getOffhandItem())
                     || hasPhoneInHotbar(localPlayer);
         }
@@ -135,15 +118,6 @@ public final class PhoneClientHooks {
             }
         }
 
-        if (player instanceof LocalPlayer localPlayer && bankReceiveWorldActive) {
-            if (bankReceiveWorldHand == InteractionHand.OFF_HAND && isPhone(localPlayer.getOffhandItem())) {
-                return localPlayer.getMainArm().getOpposite();
-            }
-            if (isPhone(localPlayer.getMainHandItem()) || hasPhoneInHotbar(localPlayer)) {
-                return localPlayer.getMainArm();
-            }
-        }
-
         if (PhoneCallPoseAccess.isPhoneCallPoseActive(player)) {
             if (isPhone(player.getOffhandItem())) {
                 return player.getMainArm().getOpposite();
@@ -155,17 +129,6 @@ public final class PhoneClientHooks {
         }
 
         if (PhoneCallPoseAccess.isPhoneCameraPoseActive(player)) {
-            if (isPhone(player.getOffhandItem())) {
-                return player.getMainArm().getOpposite();
-            }
-
-            if (isPhone(player.getMainHandItem())) {
-                return player.getMainArm();
-            }
-        }
-
-        if (PhoneCallPoseAccess.isPhoneBankQrPoseActive(player)
-                || PhoneCallPoseAccess.isPhoneChatQrPoseActive(player)) {
             if (isPhone(player.getOffhandItem())) {
                 return player.getMainArm().getOpposite();
             }
@@ -221,8 +184,6 @@ public final class PhoneClientHooks {
         LocalPlayer localPlayer = getLocalPlayer();
         if (entity instanceof Player player && player != localPlayer) {
             return PhoneCallPoseAccess.isPhoneScreenOnActive(player)
-                    && !PhoneCallPoseAccess.isPhoneBankQrPoseActive(player)
-                    && !PhoneCallPoseAccess.isPhoneChatQrPoseActive(player)
                     && !PhoneCallPoseAccess.isPhoneCallPoseActive(player)
                     && (isPhone(player.getMainHandItem()) || isPhone(player.getOffhandItem()));
         }
@@ -240,42 +201,17 @@ public final class PhoneClientHooks {
     }
 
     public static boolean shouldUsePhoneQrModel(LivingEntity entity) {
-        LocalPlayer localPlayer = getLocalPlayer();
-        if (entity instanceof Player player && player != localPlayer) {
-            return PhoneCallPoseAccess.isPhoneBankQrPoseActive(player)
-                    && (isPhone(player.getMainHandItem()) || isPhone(player.getOffhandItem()));
-        }
-
-        if (localPlayer == null || entity != localPlayer) {
-            return false;
-        }
-
-        return bankReceiveWorldActive && (false /*!bankReceiveWorldIsChat*/)
-                && (isPhone(localPlayer.getMainHandItem()) || isPhone(localPlayer.getOffhandItem())
-                        || hasPhoneInHotbar(localPlayer));
+        return false;
     }
 
     public static boolean shouldUseChatQrModel(LivingEntity entity) {
-        LocalPlayer localPlayer = getLocalPlayer();
-        if (entity instanceof Player player && player != localPlayer) {
-            return PhoneCallPoseAccess.isPhoneChatQrPoseActive(player)
-                    && (isPhone(player.getMainHandItem()) || isPhone(player.getOffhandItem()));
-        }
-
-        if (localPlayer == null || entity != localPlayer) {
-            return false;
-        }
-
-        return bankReceiveWorldActive && true
-                && (isPhone(localPlayer.getMainHandItem()) || isPhone(localPlayer.getOffhandItem())
-                        || hasPhoneInHotbar(localPlayer));
+        return false;
     }
 
     public static boolean isLocalPhoneCameraPoseActive() {
         PhoneScreen phoneScreen = getOpenPhoneScreen();
         return phoneScreen != null && !phoneScreen.isHomePhoneMode()
-                && phoneScreen.isCameraModeActive()
-                && !bankReceiveWorldActive;
+                && phoneScreen.isCameraModeActive();
     }
 
     public static boolean isLocalPhoneCameraSelfieActive() {
@@ -285,7 +221,7 @@ public final class PhoneClientHooks {
 
     public static boolean isLocalPhoneScreenOnActive() {
         PhoneScreen phoneScreen = getOpenPhoneScreen();
-        return phoneScreen != null && !phoneScreen.isHomePhoneMode() && !bankReceiveWorldActive;
+        return phoneScreen != null && !phoneScreen.isHomePhoneMode();
     }
 
     public static void tickMobileCallHotbarLock() {
@@ -338,50 +274,6 @@ public final class PhoneClientHooks {
         mobileCallSlotLockActive = false;
         mobileCallSlotLockOffhand = false;
         mobileCallLockedHotbarSlot = -1;
-    }
-
-    public static void showBankReceiveQrToWorld(InteractionHand hand) {
-        showBankReceiveQrToWorld(hand, false);
-    }
-
-    public static void showBankReceiveQrToWorld(InteractionHand hand, boolean chat) {
-        Minecraft minecraft = Minecraft.getInstance();
-        bankReceiveWorldActive = true;
-        bankReceiveWorldHand = hand == null ? InteractionHand.MAIN_HAND : hand;
-        ensureBankReceivePhoneSelected(minecraft);
-        bankReceiveEscDown = minecraft != null && isEscapeDown(minecraft);
-    }
-
-    public static void tickBankReceiveWorld(Minecraft minecraft) {
-        if (!bankReceiveWorldActive) {
-            bankReceiveEscDown = false;
-            return;
-        }
-
-        if (minecraft == null || minecraft.player == null) {
-            clearBankReceiveWorldState(false);
-            return;
-        }
-
-        if (!isPhone(minecraft.player.getMainHandItem()) && !isPhone(minecraft.player.getOffhandItem())
-                && !hasPhoneInHotbar(minecraft.player)) {
-            clearBankReceiveWorldState(true);
-            return;
-        }
-        ensureBankReceivePhoneSelected(minecraft);
-
-        boolean escapeDown = isEscapeDown(minecraft);
-        if (escapeDown && !bankReceiveEscDown) {
-            bankReceiveWorldActive = false;
-            minecraft.setScreen(PhoneScreen.chatQrScreen(bankReceiveWorldHand));
-        }
-        bankReceiveEscDown = escapeDown;
-    }
-
-    public static void clearBankReceiveWorldState(boolean notifyServer) {
-        bankReceiveWorldActive = false;
-        bankReceiveEscDown = false;
-        bankReceiveWorldHand = InteractionHand.MAIN_HAND;
     }
 
     private static LocalPlayer getLocalPlayer() {
@@ -437,18 +329,6 @@ public final class PhoneClientHooks {
             }
         }
         return -1;
-    }
-
-    private static void ensureBankReceivePhoneSelected(Minecraft minecraft) {
-        if (minecraft == null || minecraft.player == null || isPhone(minecraft.player.getMainHandItem())
-                || isPhone(minecraft.player.getOffhandItem())) {
-            return;
-        }
-
-        int phoneSlot = findPhoneHotbarSlot(minecraft.player);
-        if (phoneSlot >= 0) {
-            minecraft.player.getInventory().selected = phoneSlot;
-        }
     }
 
     private static void restoreSelectedHotbarSlot(LocalPlayer player) {

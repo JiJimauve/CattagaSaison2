@@ -38,7 +38,8 @@ public abstract class CameraMixin {
         Vec3 right = look.cross(WORLD_UP);
         if (right.lengthSqr() < 1.0E-4D) {
             right = Vec3.directionFromRotation(0.0F, localPlayer.getYRot() - 90.0F);
-        } else {
+        }
+        else {
             right = right.normalize();
         }
 

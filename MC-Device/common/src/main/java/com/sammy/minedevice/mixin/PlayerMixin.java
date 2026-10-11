@@ -33,16 +33,6 @@ public abstract class PlayerMixin implements PhoneCallPoseAccess {
             EntityDataSerializers.BOOLEAN
     );
     @Unique
-    private static final EntityDataAccessor<Boolean> MINDEVICE_PHONE_BANK_QR_POSE = SynchedEntityData.defineId(
-            Player.class,
-            EntityDataSerializers.BOOLEAN
-    );
-    @Unique
-    private static final EntityDataAccessor<Boolean> MINDEVICE_PHONE_CHAT_QR_POSE = SynchedEntityData.defineId(
-            Player.class,
-            EntityDataSerializers.BOOLEAN
-    );
-    @Unique
     private static final EntityDataAccessor<Boolean> MINDEVICE_PHONE_SCREEN_ON = SynchedEntityData.defineId(
             Player.class,
             EntityDataSerializers.BOOLEAN
@@ -53,8 +43,6 @@ public abstract class PlayerMixin implements PhoneCallPoseAccess {
         ((Player) (Object) this).getEntityData().define(MINDEVICE_PHONE_CALL_POSE, false);
         ((Player) (Object) this).getEntityData().define(MINDEVICE_PHONE_CAMERA_POSE, false);
         ((Player) (Object) this).getEntityData().define(MINDEVICE_PHONE_CAMERA_SELFIE, false);
-        ((Player) (Object) this).getEntityData().define(MINDEVICE_PHONE_BANK_QR_POSE, false);
-        ((Player) (Object) this).getEntityData().define(MINDEVICE_PHONE_CHAT_QR_POSE, false);
         ((Player) (Object) this).getEntityData().define(MINDEVICE_PHONE_SCREEN_ON, false);
     }
 
@@ -99,26 +87,6 @@ public abstract class PlayerMixin implements PhoneCallPoseAccess {
     @Override
     public void minedevice$setPhoneCameraSelfieActive(boolean active) {
         ((Player) (Object) this).getEntityData().set(MINDEVICE_PHONE_CAMERA_SELFIE, active);
-    }
-
-    @Override
-    public boolean minedevice$isPhoneBankQrPoseActive() {
-        return ((Player) (Object) this).getEntityData().get(MINDEVICE_PHONE_BANK_QR_POSE);
-    }
-
-    @Override
-    public void minedevice$setPhoneBankQrPoseActive(boolean active) {
-        ((Player) (Object) this).getEntityData().set(MINDEVICE_PHONE_BANK_QR_POSE, active);
-    }
-
-    @Override
-    public boolean minedevice$isPhoneChatQrPoseActive() {
-        return ((Player) (Object) this).getEntityData().get(MINDEVICE_PHONE_CHAT_QR_POSE);
-    }
-
-    @Override
-    public void minedevice$setPhoneChatQrPoseActive(boolean active) {
-        ((Player) (Object) this).getEntityData().set(MINDEVICE_PHONE_CHAT_QR_POSE, active);
     }
 
     @Override

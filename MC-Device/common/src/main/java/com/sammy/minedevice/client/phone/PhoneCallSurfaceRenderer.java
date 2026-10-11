@@ -202,7 +202,7 @@ final class PhoneCallSurfaceRenderer {
                         y + (contactRowHeight - lineHeight) / 2,
                         showNumberOnly ? 0xFF8E8E93 : 0xFF000000, false, lineScale);
 
-                guiGraphics.blit(PhoneScreen.DELETE_BUTTON_TEXTURE, btnX, btnY,
+                guiGraphics.blit(PhoneAssets.DELETE_BUTTON_TEXTURE, btnX, btnY,
                         btnSize, btnSize, 0.0F, 0.0F, 24, 24, 24, 24);
 
                 guiGraphics.fill(editX, btnY, editX + btnSize, btnY + btnSize, 0xFF007AFF);
@@ -373,7 +373,7 @@ final class PhoneCallSurfaceRenderer {
 
         UiRect contentBounds = screen.getCallSurfaceBounds();
         int numberInsetX = Math.max(7, Math.round(9 * screen.scale));
-        
+
         int statusY = contentBounds.top + Math.max(24, Math.round(32 * screen.scale));
         UiRect sessionNumberBounds = new UiRect(
                 contentBounds.left + numberInsetX,
@@ -438,18 +438,18 @@ final class PhoneCallSurfaceRenderer {
         if (screen.activeCallIncoming && !screen.activeCallConnected) {
             int gap = Math.max(5, Math.round(6 * screen.scale));
             int incomingHangupX = connectButtonBounds.right() + gap;
-            guiGraphics.blit(PhoneScreen.ANSWER_BUTTON_TEXTURE, 
+            guiGraphics.blit(PhoneAssets.ANSWER_BUTTON_TEXTURE,
                     connectButtonBounds.left, connectButtonBounds.top,
-                    connectButtonBounds.width, connectButtonBounds.height, 
+                    connectButtonBounds.width, connectButtonBounds.height,
                     0.0F, 0.0F, 24, 24, 24, 24);
-            guiGraphics.blit(PhoneScreen.HANGUP_BUTTON_TEXTURE, 
+            guiGraphics.blit(PhoneAssets.HANGUP_BUTTON_TEXTURE,
                     incomingHangupX, connectButtonBounds.top,
-                    connectButtonBounds.width, connectButtonBounds.height, 
+                    connectButtonBounds.width, connectButtonBounds.height,
                     0.0F, 0.0F, 24, 24, 24, 24);
         } else {
-            guiGraphics.blit(PhoneScreen.HANGUP_BUTTON_TEXTURE, 
+            guiGraphics.blit(PhoneAssets.HANGUP_BUTTON_TEXTURE,
                     hangupButtonBounds.left, hangupButtonBounds.top,
-                    hangupButtonBounds.width, hangupButtonBounds.height, 
+                    hangupButtonBounds.width, hangupButtonBounds.height,
                     0.0F, 0.0F, 24, 24, 24, 24);
         }
 
@@ -458,9 +458,9 @@ final class PhoneCallSurfaceRenderer {
             UiRect speakerBounds = screen.getCallSpeakerButtonBounds();
             // Mute = microphone (off when muted); Speaker = speaker (reduce when off).
             renderCallIconButton(guiGraphics, muteBounds,
-                    screen.callMuted ? PhoneScreen.MIC_OFF_TEXTURE : PhoneScreen.MIC_ON_TEXTURE);
+                    screen.callMuted ? PhoneAssets.MIC_OFF_TEXTURE : PhoneAssets.MIC_ON_TEXTURE);
             renderCallIconButton(guiGraphics, speakerBounds,
-                    screen.callSpeakerEnabled ? PhoneScreen.SPEAKER_ON_TEXTURE : PhoneScreen.SPEAKER_REDUCE_TEXTURE);
+                    screen.callSpeakerEnabled ? PhoneAssets.SPEAKER_ON_TEXTURE : PhoneAssets.SPEAKER_REDUCE_TEXTURE);
         }
     }
 
@@ -472,7 +472,7 @@ final class PhoneCallSurfaceRenderer {
     static void renderCallBackdrop(PhoneScreen screen, GuiGraphics guiGraphics) {
         UiRect backdropBounds = screen.getCallBackdropBounds();
         if (screen.callSessionMode) {
-            guiGraphics.blit(PhoneScreen.DEFAULT_BACKGROUND_TEXTURE, backdropBounds.left, backdropBounds.top,
+            guiGraphics.blit(PhoneAssets.DEFAULT_BACKGROUND_TEXTURE, backdropBounds.left, backdropBounds.top,
                     0.0F, 0.0F, backdropBounds.width, backdropBounds.height,
                     PhoneScreen.DISPLAY_WIDTH, PhoneScreen.DISPLAY_HEIGHT);
             guiGraphics.fill(backdropBounds.left, backdropBounds.top, backdropBounds.right(), backdropBounds.bottom(), 0xE6FFFFFF);
@@ -486,7 +486,7 @@ final class PhoneCallSurfaceRenderer {
         int accentBottom = accentTop + Math.max(24, Math.round(30 * screen.scale));
         int footerShadeHeight = Math.max(48, Math.round(58 * screen.scale));
 
-        guiGraphics.blit(PhoneScreen.DEFAULT_BACKGROUND_TEXTURE, backdropBounds.left, backdropBounds.top,
+        guiGraphics.blit(PhoneAssets.DEFAULT_BACKGROUND_TEXTURE, backdropBounds.left, backdropBounds.top,
                 0.0F, 0.0F, backdropBounds.width, backdropBounds.height,
                 PhoneScreen.DISPLAY_WIDTH, PhoneScreen.DISPLAY_HEIGHT);
         guiGraphics.fill(backdropBounds.left, backdropBounds.top, backdropBounds.right(), backdropBounds.bottom(), 0xE6FFFFFF);
@@ -509,7 +509,7 @@ final class PhoneCallSurfaceRenderer {
         int accentTop = backdropBounds.top + Math.max(10, Math.round(12 * screen.scale));
         int accentBottom = accentTop + Math.max(24, Math.round(28 * screen.scale));
 
-        guiGraphics.blit(PhoneScreen.DEFAULT_BACKGROUND_TEXTURE, backdropBounds.left, backdropBounds.top,
+        guiGraphics.blit(PhoneAssets.DEFAULT_BACKGROUND_TEXTURE, backdropBounds.left, backdropBounds.top,
                 0.0F, 0.0F, backdropBounds.width, backdropBounds.height,
                 PhoneScreen.DISPLAY_WIDTH, PhoneScreen.DISPLAY_HEIGHT);
         guiGraphics.fill(backdropBounds.left, backdropBounds.top, backdropBounds.right(), backdropBounds.bottom(), 0xDCFFFFFF);
@@ -537,11 +537,11 @@ final class PhoneCallSurfaceRenderer {
         guiGraphics.fill(contentBoundsLeft, tabBarTop, contentBoundsRight, tabBarBottom, 0xFFFFFFFF);
         guiGraphics.fill(contentBoundsLeft, tabBarTop, contentBoundsRight, tabBarTop + 1, 0xFFC7C7CC);
 
-        renderCallMenuTab(screen, guiGraphics, dialBounds, PhoneScreen.CALL_MENU_TEXTURE,
+        renderCallMenuTab(screen, guiGraphics, dialBounds, PhoneAssets.CALL_MENU_TEXTURE,
                 Component.translatable("screen.minedevice.phone.call.tab.dial"), dialPageActive);
-        renderCallMenuTab(screen, guiGraphics, recentsBounds, PhoneScreen.TIME_BUTTON_TEXTURE,
+        renderCallMenuTab(screen, guiGraphics, recentsBounds, PhoneAssets.TIME_BUTTON_TEXTURE,
                 Component.translatable("screen.minedevice.phone.call.tab.recents"), recentsPageActive);
-        renderCallMenuTab(screen, guiGraphics, listBounds, PhoneScreen.LIST_MENU_TEXTURE,
+        renderCallMenuTab(screen, guiGraphics, listBounds, PhoneAssets.LIST_MENU_TEXTURE,
                 Component.translatable("screen.minedevice.phone.call.tab.contacts"), contactsPageActive);
     }
 
@@ -653,7 +653,7 @@ final class PhoneCallSurfaceRenderer {
 
     private static void renderDialPadButton(GuiGraphics guiGraphics, Font font, UiRect bounds, Component text,
                                             int fillColor, int borderColor, int textColor, float scale) {
-        guiGraphics.blit(PhoneScreen.CALL_BUTTON_TEXTURE, bounds.left, bounds.top,
+        guiGraphics.blit(PhoneAssets.CALL_BUTTON_TEXTURE, bounds.left, bounds.top,
                 bounds.width, bounds.height, 0.0F, 0.0F, 32, 32, 32, 32);
 
         float textScale = PhoneScreenDraw.textScaleToFit(font, text, bounds.width - Math.round(8 * scale), 0.40F);

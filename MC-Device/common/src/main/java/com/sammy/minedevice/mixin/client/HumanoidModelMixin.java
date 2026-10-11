@@ -29,23 +29,13 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> {
     private static final float CAMERA_ARM_PITCH = -(100.0F * ((float) Math.PI / 180.0F));
     private static final float CAMERA_ARM_YAW = 0.22F;
     private static final float CAMERA_ARM_ROLL = 0.08F;
-    private static final float QR_ARM_X = 4.25F;
-    private static final float QR_ARM_FORWARD_Z = -1.0F;
-    private static final float QR_ARM_PITCH = -1.15F;
-    private static final float QR_ARM_YAW = 0.22F;
-    private static final float QR_ARM_ROLL = 0.08F;
     private static final float MEGAPHONE_ARM_SIDE_OFFSET = 2.15F;
     private static final float MEGAPHONE_ARM_FORWARD_OFFSET = 1.75F;
     private static final float MEGAPHONE_ARM_PITCH = -1.48F;
     private static final float MEGAPHONE_ARM_ROLL = 0.04F;
     private static final float MEGAPHONE_ARM_HEAD_PITCH_FOLLOW = 1.0F;
     private static final float MEGAPHONE_ARM_HEAD_YAW_FOLLOW = 1.0F;
-    private static final float WALKIE_ARM_SIDE_OFFSET = 1.8F;
     private static final float WALKIE_ARM_PITCH = -1.48F;
-    private static final float WALKIE_ARM_YAW_OFFSET = 0.0F;
-    private static final float WALKIE_ARM_ROLL = 0.0F;
-    private static final float WALKIE_ARM_HEAD_PITCH_FOLLOW = 1.0F;
-    private static final float WALKIE_ARM_HEAD_YAW_FOLLOW = 1.0F;
     private static final float HANDSET_ARM_PITCH = -(134.0F * ((float) Math.PI / 180.0F));
     private static final float HANDSET_ARM_YAW = 0.08F;
     private static final float HANDSET_ARM_ROLL = 0.04F;
@@ -88,15 +78,6 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> {
         float side = phoneArm == HumanoidArm.RIGHT ? 1.0F : -1.0F;
         if (PhoneClientHooks.shouldUsePhoneCallPose(entity)) {
             minedevice$applyHandsetPose(raisedArm, side);
-            return;
-        }
-
-        if (PhoneClientHooks.shouldUsePhoneQrModel(entity) || PhoneClientHooks.shouldUseChatQrModel(entity)) {
-            raisedArm.x = -QR_ARM_X * side;
-            raisedArm.z = QR_ARM_FORWARD_Z;
-            raisedArm.xRot = Mth.clamp(head.xRot + QR_ARM_PITCH, -1.80F, 0.35F);
-            raisedArm.yRot = head.yRot - (QR_ARM_YAW * side);
-            raisedArm.zRot = QR_ARM_ROLL * side;
             return;
         }
 

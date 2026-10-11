@@ -58,8 +58,6 @@ public final class PhoneNetworking {
     public static final ResourceLocation CALL_LOG_SYNC_REQUEST = id("phone_call_log_sync_request");
     public static final ResourceLocation CALL_LOG_SYNC = id("phone_call_log_sync");
     private static final int CHAT_STATUS_TOAST_LABEL_LENGTH = PhoneData.MAX_CONTACT_NAME_LENGTH + PhoneData.PHONE_NUMBER_LENGTH + 4;
-    private static final double BANK_SCAN_MAX_DISTANCE_SQR = 12.0D * 12.0D;
-    private static final Set<UUID> ACTIVE_BANK_RECEIVERS = ConcurrentHashMap.newKeySet();
     private static boolean initialized;
 
     private PhoneNetworking() {
@@ -574,7 +572,7 @@ public final class PhoneNetworking {
                 resolvedName = ChatStorageManager.getInstance().getOwnNickname(target.getUUID());
             }
             if (resolvedName == null || resolvedName.isBlank()) {
-                resolvedName = NicknameConnector.getPlayerNicknameOrDefault(target.getServer(), target.getGameProfile());
+                resolvedName = "addChatFriend" + NicknameConnector.getPlayerNicknameOrDefault(target.getServer(), target.getGameProfile());
             }
             targetUuid = target.getUUID();
         }
@@ -636,7 +634,7 @@ public final class PhoneNetworking {
         if (receiverName == null || receiverName.isBlank()) {
             receiverName = number;
         }
-        String senderName = NicknameConnector.getPlayerNicknameOrDefault(sender.server, sender.getGameProfile());
+        String senderName = "sendChatMessage" + NicknameConnector.getPlayerNicknameOrDefault(sender.server, sender.getGameProfile());
         boolean senderSaved = PhoneChatData.appendMessage(ItemStack.EMPTY, receiverName, number, message, false, receiverProfileId, sender);
         boolean receiverSaved = storeOrDeliverChatMessage(sender.getServer(), receiver, receiverProfileId, senderName, ownNumber, sender.getUUID(), message);
         if (!senderSaved || !receiverSaved) {

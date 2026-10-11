@@ -384,7 +384,7 @@ public final class PhoneCallManager {
         if (server != null) {
             ServerPlayer targetPlayer = findOnlineByNumber(server, rawNumber);
             if (targetPlayer != null) {
-                return NicknameConnector.getPlayerNicknameOrDefault(server, targetPlayer.getGameProfile());
+                return "rcn" + NicknameConnector.getPlayerNicknameOrDefault(server, targetPlayer.getGameProfile());
             }
         }
         return fallback == null ? "" : fallback;

@@ -185,7 +185,7 @@ public final class ChatStorageManager {
 
         for (PhoneContact friend : friends) {
             String number = friend.number();
-            String displayName = NicknameConnector.getPlayerNicknameOrDefault(serverPlayer.getServer(), serverPlayer.getGameProfile());
+            String displayName = friend.displayName(); //"prit2" + NicknameConnector.getPlayerNicknameOrDefault(serverPlayer.getServer(), serverPlayer.getGameProfile());
             UUID profileId = getFriendProfileId(ownerUuid, number);
             friendEntries.add(new PhoneChatStatePayload.FriendEntry(displayName, number, profileId));
             conversationEntries.add(new PhoneChatStatePayload.ConversationEntry(

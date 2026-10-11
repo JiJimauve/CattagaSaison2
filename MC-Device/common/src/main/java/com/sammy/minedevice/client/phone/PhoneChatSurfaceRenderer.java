@@ -62,11 +62,6 @@ final class PhoneChatSurfaceRenderer {
     }
 
     static void renderChatAppSurface(PhoneScreen screen, GuiGraphics guiGraphics) {
-        if (screen.chatQrShowMode) {
-            renderChatQrSurface(screen, guiGraphics);
-            return;
-        }
-
         if (screen.chatAddSelectorMode) {
             renderChatAddSelectorSurface(screen, guiGraphics);
             return;
@@ -739,21 +734,6 @@ final class PhoneChatSurfaceRenderer {
                 optionTextLeft,
                 onlineBounds.top + (onlineBounds.height - Math.round(font.lineHeight * 0.5F)) / 2,
                 optionTextWidth, TEXT_PRIMARY, 0.5F);
-
-        // 5. Scan QR Code Button Card
-        UiRect scanBounds = screen.getChatAddOptScanBounds();
-        renderElevatedRoundedPanel(guiGraphics, scanBounds.left, scanBounds.top, scanBounds.width, scanBounds.height,
-                0xFF04B04B, 0xFF06C755, SHADOW_SOFT);
-
-        drawFittedText(guiGraphics, font, Component.literal("\uD83D\uDCF1"),
-                iconX,
-                scanBounds.top + (scanBounds.height - Math.round(font.lineHeight * 0.5F)) / 2,
-                30, TEXT_LIGHT, 0.5F);
-
-        drawFittedText(guiGraphics, font, Component.translatable("phone.chat.add_menu.by_scan").copy().withStyle(s -> s.withBold(true)),
-                optionTextLeft,
-                scanBounds.top + (scanBounds.height - Math.round(font.lineHeight * 0.5F)) / 2,
-                scanBounds.right() - optionTextLeft - Math.max(4, Math.round(6 * screen.scale)), TEXT_LIGHT, 0.5F);
     }
 
     static void renderChatCameraOverlay(PhoneScreen screen, GuiGraphics guiGraphics) {
@@ -827,99 +807,14 @@ final class PhoneChatSurfaceRenderer {
 
         // Footer buttons, same layout as the bank's scan-to-pay overlay:
         // wide "My QR" button + eye button for free-look.
-        UiRect myQrBounds = screen.getQrScanReceiveButtonBounds();
-        renderElevatedRoundedPanel(guiGraphics, myQrBounds.left, myQrBounds.top, myQrBounds.width, myQrBounds.height,
-                0xFF04B04B, 0xFF06C755, SHADOW_SOFT);
-        drawCenteredFittedText(guiGraphics, font, Component.translatable("phone.chat.scan.my_qr"),
-                myQrBounds.left + myQrBounds.width / 2,
-                myQrBounds.top + (myQrBounds.height - Math.round(font.lineHeight * 0.5F)) / 2,
-                myQrBounds.width - 6, TEXT_LIGHT, 0.5F);
 
-        UiRect eyeBounds = screen.getQrScanEyeButtonBounds();
-        renderElevatedRoundedPanel(guiGraphics, eyeBounds.left, eyeBounds.top, eyeBounds.width, eyeBounds.height,
-                0x66FFFFFF, 0x33FFFFFF, SHADOW_SOFT);
-        drawCenteredFittedText(guiGraphics, font, Component.literal("👁"),
-                eyeBounds.left + eyeBounds.width / 2,
-                eyeBounds.top + (eyeBounds.height - Math.round(font.lineHeight * 0.5F)) / 2,
-                eyeBounds.width - 2, TEXT_LIGHT, 0.5F);
-    }
-
-    static void renderChatQrSurface(PhoneScreen screen, GuiGraphics guiGraphics) {
-        Minecraft minecraft = Minecraft.getInstance();
-        Font font = minecraft.font;
-        UiRect contentBounds = screen.getChatSurfaceBounds();
-
-        guiGraphics.fill(contentBounds.left, contentBounds.top, contentBounds.right(), contentBounds.bottom(), PAGE_FILL);
-
-        // Header (same style as the Add Friend page)
-        int headerHeight = Math.max(24, Math.round(30 * screen.scale));
-        guiGraphics.fill(contentBounds.left, contentBounds.top, contentBounds.right(), contentBounds.top + headerHeight, 0xFFFFFFFF);
-        guiGraphics.fill(contentBounds.left, contentBounds.top + headerHeight - 1, contentBounds.right(), contentBounds.top + headerHeight, 0x1A000000);
-
-        UiRect backBounds = screen.getChatAddBackBtnBounds();
-        drawCenteredFittedText(guiGraphics, font, Component.literal("<-"),
-                backBounds.left + backBounds.width / 2,
-                backBounds.top + (backBounds.height - Math.round(font.lineHeight * 0.55F)) / 2,
-                backBounds.width, 0xFF0081BA, 0.55F);
-
-        int centerX = contentBounds.left + contentBounds.width / 2;
-        drawCenteredFittedText(guiGraphics, font, Component.translatable("phone.chat.qr.title").copy().withStyle(s -> s.withBold(true)),
-                centerX,
-                contentBounds.top + (headerHeight - Math.round(font.lineHeight * 0.55F)) / 2,
-                contentBounds.width - 60, TEXT_PRIMARY, 0.55F);
-
-        // White card with a decorative QR pattern derived from the phone number
-        String ownNumber = screen.getOwnPhoneNumber();
-        int cardSize = Math.min(contentBounds.width - Math.max(24, Math.round(30 * screen.scale)),
-                Math.max(70, Math.round(96 * screen.scale)));
-        int cardX = contentBounds.left + (contentBounds.width - cardSize) / 2;
-        int cardY = contentBounds.top + headerHeight + Math.max(14, Math.round(18 * screen.scale));
-        renderElevatedRoundedPanel(guiGraphics, cardX, cardY, cardSize, cardSize, CARD_BORDER, CARD_FILL, SHADOW_SOFT);
-
-        int cells = 17;
-        int quiet = Math.max(4, Math.round(6 * screen.scale));
-        int cellSize = Math.max(2, (cardSize - quiet * 2) / cells);
-        int gridSize = cellSize * cells;
-        int gridX = cardX + (cardSize - gridSize) / 2;
-        int gridY = cardY + (cardSize - gridSize) / 2;
-        java.util.Random random = new java.util.Random(ownNumber.hashCode() * 31L + 7L);
-        for (int row = 0; row < cells; row++) {
-            for (int column = 0; column < cells; column++) {
-                boolean finder = (row < 5 && column < 5) || (row < 5 && column >= cells - 5) || (row >= cells - 5 && column < 5);
-                boolean dark;
-                if (finder) {
-                    int fr = row < 5 ? row : row - (cells - 5);
-                    int fc = column < 5 ? column : column - (cells - 5);
-                    dark = fr == 0 || fr == 4 || fc == 0 || fc == 4 || (fr >= 1 && fr <= 3 && fc >= 1 && fc <= 3 && fr != 1 && fr != 3 && fc != 1 && fc != 3)
-                            || (fr == 2 && fc == 2);
-                } else {
-                    dark = random.nextBoolean();
-                }
-                if (dark) {
-                    int x = gridX + column * cellSize;
-                    int y = gridY + row * cellSize;
-                    guiGraphics.fill(x, y, x + cellSize, y + cellSize, 0xFF111827);
-                }
-            }
-        }
-
-        // Own number + hint below the card
-        int numberY = cardY + cardSize + Math.max(8, Math.round(10 * screen.scale));
-        drawCenteredFittedText(guiGraphics, font, Component.literal(ownNumber).copy().withStyle(s -> s.withBold(true)),
-                centerX, numberY, contentBounds.width - 20, 0xFF0081BA, 0.6F);
-
-        drawCenteredFittedText(guiGraphics, font, Component.translatable("phone.chat.qr.hint"),
-                centerX, numberY + Math.max(11, Math.round(13 * screen.scale)),
-                contentBounds.width - Math.max(10, Math.round(14 * screen.scale)), TEXT_MUTED, 0.38F);
-
-        // "Show to world" button — hold the phone up so a friend can scan you.
-        UiRect showBtn = screen.getChatQrShowButtonBounds();
-        renderElevatedRoundedPanel(guiGraphics, showBtn.left, showBtn.top, showBtn.width, showBtn.height,
-                0xFF04B04B, 0xFF06C755, SHADOW_SOFT);
-        drawCenteredFittedText(guiGraphics, font, Component.translatable("phone.chat.qr.show"),
-                showBtn.left + showBtn.width / 2,
-                showBtn.top + (showBtn.height - Math.round(font.lineHeight * 0.5F)) / 2,
-                showBtn.width - 6, TEXT_LIGHT, 0.5F);
+//        UiRect eyeBounds = screen.getQrScanEyeButtonBounds();
+//        renderElevatedRoundedPanel(guiGraphics, eyeBounds.left, eyeBounds.top, eyeBounds.width, eyeBounds.height,
+//                0x66FFFFFF, 0x33FFFFFF, SHADOW_SOFT);
+//        drawCenteredFittedText(guiGraphics, font, Component.literal("👁"),
+//                eyeBounds.left + eyeBounds.width / 2,
+//                eyeBounds.top + (eyeBounds.height - Math.round(font.lineHeight * 0.5F)) / 2,
+//                eyeBounds.width - 2, TEXT_LIGHT, 0.5F);
     }
 
     private static void drawCorner(GuiGraphics guiGraphics, int x, int y, int length,

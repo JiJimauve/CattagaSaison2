@@ -202,10 +202,6 @@ final class PhoneMediaSurfaceRenderer {
             return;
         }
 
-        if (screen.isChatScanCameraMode()) {
-            return;
-        }
-
         renderCameraStorageWarning(screen, guiGraphics);
         renderCameraZoomIndicator(screen, guiGraphics);
 
